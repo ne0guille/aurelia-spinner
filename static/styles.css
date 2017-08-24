@@ -1,0 +1,11 @@
+.spinner-blocker {
+  z-index: 1;
+  left: inherit;
+  top: inherit;
+  position: relative;
+  /* background: linear-gradient(rgba(8, 76, 113, 0.38), #fbfdff); */
+  height: auto;
+  opacity: .3;
+  animation: none !important;
+  pointer-events: none;
+}
