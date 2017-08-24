@@ -1,61 +1,23 @@
-Simply aurelia custom attribute to split screen using https://github.com/nathancahill/Split.js
+Aurelia custom attribute to add awesome spinners based on http://tobiasahlin.com/spinkit/
+
 
 **demo**
-http://aurelia-spinner.azurewebsites.net/
+http://aurelia-spinner-demo.azurewebsites.net/
 
 **Installation**
-
 `npm install aurelia-spinner --save`
-
+-------------
+Todo
 **Plugin Setup**
 `aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner'));`
 
 **add style in webpack**
-`'aurelia-spinner/dist/aurelia-spinner.css'`
 
 **Usage**
-split-panel custom attribute needs to be placed on the parent of the panels to be splitted.
-Panels must specify an Id.
 
-If the parent doesnt't have a height and the clientHeight is also 0, it will take the childrens panel height;
-``` 
-<div split-panel style="height: 200px">
-    <div id="panel1">
-      <p>test</p>
-      <a>test</a>
-      <a>test</a>
-    </div>
-    <div id="panel2">
-      <p>test</p>
-      <a>test</a>
-      <a>test</a>
-    </div>
-  </div>
-  ```
 
   **Options**
-  https://nathancahill.github.io/Split.js/
-```
-  sizes: Array<number>; Initial sizes of each element in percents.
-  minSize: Array<number> | number = 100; Minimum size of each element in pixels.
-  gutterSize: number = 10; Gutter size in pixels.
-  vertical: boolean = false; Direction to split: horizontal or vertical.
-```
 
-``` 
-<div split-panel="sizes: [40, 60]; minSize: 200; gutterSize: 5; vertical: true">
-    <div id="panel1">
-      <p>test</p>
-      <a>test</a>
-      <a>test</a>
-    </div>
-    <div id="panel2">
-      <p>test</p>
-      <a>test</a>
-      <a>test</a>
-    </div>
-  </div>
-  ```
 
   **Dependencies**
-  "split.js": https://nathancahill.github.io/Split.js/
+  "spinkit": https://github.com/tobiasahlin/SpinKit
