@@ -3,7 +3,7 @@
   left: inherit;
   top: inherit;
   position: relative;
-  /* background: linear-gradient(rgba(8, 76, 113, 0.38), #fbfdff); */
+  background: rgba(225, 225, 225, .5);
   height: auto;
   opacity: .3;
   animation: none !important;

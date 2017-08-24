@@ -1,5 +1,5 @@
 var appRoot = 'src/';
-var styles = 'static/'
+var styles = 'static/';
 var outputRoot = 'dist/';
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
   source: appRoot + '**/*.js',
   html: appRoot + '**/*.html',
   css: styles + '**/*.css',
-  static: 'static/**/*.*',
+  spinnerStyle: 'node_modules/spinkit/css/spinkit.css',
   output: outputRoot,
   doc: './doc',
   e2eSpecsSrc: 'test/e2e/src/*.js',
