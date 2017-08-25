@@ -3,9 +3,10 @@
   left: inherit;
   top: inherit;
   position: relative;
-  background: rgba(225, 225, 225, .5);
+  /*background: rgba(225, 225, 225, .5);
+  background: rgba(0, 0, 0, 0.01); */
   height: auto;
-  opacity: .3;
+  opacity: .8;
   animation: none !important;
   pointer-events: none;
 }

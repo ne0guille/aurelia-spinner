@@ -48,10 +48,7 @@ function buildFromTs(tsProject, outputPath, includeEs6Dts) {
 
 gulp.task('build-html', function () {
   return gulp.src(paths.html)
-    .pipe(gulp.dest(paths.output + 'es2015'))
-    .pipe(gulp.dest(paths.output + 'commonjs'))
-    .pipe(gulp.dest(paths.output + 'amd'))
-    .pipe(gulp.dest(paths.output + 'system'));
+    .pipe(gulp.dest(paths.output));
 });
 
 gulp.task('build-css', function () {
@@ -93,7 +90,7 @@ gulp.task('build-system', function () {
 
 gulp.task('build', function (callback) {
   return runSequence(
-    'clean', ['build-css', 'build-es6', 'build-es5', 'build-commonjs'],
+    'clean', ['build-html', 'build-css', 'build-es6', 'build-es5', 'build-commonjs'],
     callback
   );
 });
