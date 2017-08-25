@@ -10,28 +10,22 @@ var __decorate = this && this.__decorate || function (decorators, target, key, d
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var aurelia_pal_1 = require("aurelia-pal");
+var spinner_config_1 = require("./spinner-config");
 var SpinnerCustomAttribute = function () {
     function SpinnerCustomAttribute(element, container, viewEngine, spinnerConfig) {
         this.element = element;
         this.container = container;
         this.viewEngine = viewEngine;
         this.spinnerConfig = spinnerConfig;
-        this.spinnerHtml = aurelia_pal_1.PLATFORM.moduleName('spinner.html');
-
+        this.spinnerHtml = aurelia_pal_1.PLATFORM.moduleName('aurelia-spinner/dist/spinner.html');
         this.show = false;
-        this.view = aurelia_pal_1.PLATFORM.moduleName('views/circle.html');
+        this.view = undefined;
         this.block = false;
-        this.config = Object.assign({}, SpinnerCustomAttribute_1.defaultConfig);
-        console.log(this.config);
-        console.log(this.config.blockerClass);
-        console.log(this.spinnerConfig);
-        if (this.spinnerConfig.spinner) this.config = Object.assign({}, this.spinnerConfig);
+        if (spinnerConfig) this.config = Object.assign({}, SpinnerCustomAttribute_1.defaultConfig, this.spinnerConfig);
     }
     SpinnerCustomAttribute_1 = SpinnerCustomAttribute;
     SpinnerCustomAttribute.prototype.bind = function () {
-        console.log("*******bind**********");
-        this.view = this.spinnerConfig.spinner || this.view;
-        console.log(this.spinnerConfig.spinner);
+        this.view = this.view || this.config.spinner;
         this.block = this.block || this.config.useBackgroundBlocker;
         if (!this.view) throw new Error("no view has been specified for the spinner");
     };
@@ -42,10 +36,8 @@ var SpinnerCustomAttribute = function () {
         if (!this.target && !this.block) return;
         showSpinner ? this.target.classList.add(this.config.blockerClass) : this.target.classList.remove(this.config.blockerClass);
     };
-
     SpinnerCustomAttribute.prototype.createSpinner = function () {
         var _this = this;
-        console.log("createSpinner ");
         this.viewEngine.loadViewFactory(this.spinnerHtml).then(function (factory) {
             var childContainer = _this.container.createChild();
             var view = factory.create(childContainer);
@@ -58,36 +50,31 @@ var SpinnerCustomAttribute = function () {
         removeSpinner.removeChild(this.divElement);
     };
     SpinnerCustomAttribute.prototype.addElement = function (view) {
-        console.log(view);
         var container = document.querySelectorAll("#" + this.element.id)[0];
         var spinnerDivElement = document.createElement('div');
         view.appendNodesTo(spinnerDivElement);
-        this.target = this.element.firstElementChild || this.element;
+        this.target = this.element.children.length === 1 ? this.element.firstElementChild : this.element;
         this.divElement = this.setElementStyle(this.element, spinnerDivElement);
         if (this.block) this.target.classList.add(this.config.blockerClass);
         container.insertBefore(this.divElement, container.firstChild);
     };
 
     SpinnerCustomAttribute.prototype.setElementStyle = function (element, htmlElement) {
-        var elementRect = element.getBoundingClientRect();
-        var height = htmlElement.getBoundingClientRect().height;
-        var top = elementRect.top + elementRect.height;
-        top = top + height < window.innerHeight ? top + window.scrollY : elementRect.top - height + window.scrollY;
+        element.style.position = 'relative';
         htmlElement.style.position = 'absolute';
         htmlElement.style.zIndex = '999';
-        htmlElement.style.height = "calc(100% - " + top + "px)";
-        htmlElement.style.top = top + "px";
-        htmlElement.style.left = "calc(50% - 35px)";
+        htmlElement.style.top = 'calc(50% - 65px)';
+        htmlElement.style.left = 'calc(50% - 35px)';
         return htmlElement;
     };
     SpinnerCustomAttribute.defaultConfig = {
-        spinner: '',
+        spinner: undefined,
         useBackgroundBlocker: false,
-        blockerClass: 'spinner-blocker'
+        blockerClass: spinner_config_1.blockerClass
     };
     __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneWay })], SpinnerCustomAttribute.prototype, "show", void 0);
     __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })], SpinnerCustomAttribute.prototype, "view", void 0);
-    __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })], SpinnerCustomAttribute.prototype, "block", void 0);
+    __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneWay })], SpinnerCustomAttribute.prototype, "block", void 0);
     SpinnerCustomAttribute = SpinnerCustomAttribute_1 = __decorate([aurelia_framework_1.inject(Element, aurelia_framework_1.Container, aurelia_framework_1.ViewEngine, 'spinner-config')], SpinnerCustomAttribute);
     return SpinnerCustomAttribute;
     var SpinnerCustomAttribute_1;
