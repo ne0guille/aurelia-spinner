@@ -12,7 +12,7 @@ export class SpinnerCustomAttribute {
 
   @bindable({ defaultBindingMode: bindingMode.oneWay }) show: boolean = false;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) view: string = undefined;
-  @bindable({ defaultBindingMode: bindingMode.oneWay }) block: boolean = false;
+  @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = undefined;
 
   static defaultConfig: SpinnerConfig = {
     spinner: undefined,

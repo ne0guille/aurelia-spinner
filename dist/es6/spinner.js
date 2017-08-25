@@ -18,7 +18,7 @@ var SpinnerCustomAttribute = (function () {
         this.spinnerHtml = aurelia_pal_1.PLATFORM.moduleName('aurelia-spinner/dist/spinner.html');
         this.show = false;
         this.view = undefined;
-        this.block = false;
+        this.block = undefined;
         if (spinnerConfig)
             this.config = Object.assign({}, SpinnerCustomAttribute_1.defaultConfig, this.spinnerConfig);
     }
@@ -82,7 +82,7 @@ var SpinnerCustomAttribute = (function () {
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
     ], SpinnerCustomAttribute.prototype, "view", void 0);
     __decorate([
-        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneWay })
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
     ], SpinnerCustomAttribute.prototype, "block", void 0);
     SpinnerCustomAttribute = SpinnerCustomAttribute_1 = __decorate([
         aurelia_framework_1.inject(Element, aurelia_framework_1.Container, aurelia_framework_1.ViewEngine, 'spinner-config')
