@@ -7,7 +7,7 @@ module.exports = {
   source: appRoot + '**/*.js',
   html: appRoot + '**/*.html',
   css: styles + '**/*.css',
-  spinnerStyle: 'node_modules/spinkit/css/spinkit.css',
+  //spinnerStyle: 'node_modules/spinkit/css/spinkit.css',
   output: outputRoot,
   doc: './doc',
   e2eSpecsSrc: 'test/e2e/src/*.js',

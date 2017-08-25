@@ -52,7 +52,7 @@ gulp.task('build-html', function () {
 });
 
 gulp.task('build-css', function () {
-  return gulp.src([paths.css, paths.spinnerStyle])
+  return gulp.src([paths.css])
     .pipe(stripCssComments())
     .pipe(concat('styles.css'))
     .pipe(gulp.dest(paths.output));
