@@ -1,7 +1,7 @@
 {
   "name": "aurelia-spinner",
   "version": "1.0.14",
-  "description": "A split screen/panel aurelia plugin.",
+  "description": "Spinner custom attribute for aurelia applications.",
   "keywords": [
     "aurelia",
     "plugin",
@@ -10,7 +10,7 @@
     "pane",
     "screen"
   ],
-  "homepage": "http://aurelia.io",
+  "homepage": "http://aurelia-spinner-demo.azurewebsites.net/",
   "bugs": {
     "url": "https://github.com/ne0guille/aurelia-spinner/issues"
   },
@@ -22,9 +22,9 @@
     "url": "https://github.com/ne0guille/aurelia-spinner"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.5.54",
-    "aurelia-bootstrapper": "^2.1.1",
-    "aurelia-testing": "^1.0.0-beta.3.0.1",
+    "@types/jasmine": "2.5.54",
+    "aurelia-bootstrapper": "2.1.1",
+    "aurelia-testing": "1.0.0-beta.3.0.1",
     "aurelia-tools": "1.0.0",
     "babel-eslint": "7.2.3",
     "babel-plugin-syntax-flow": "6.18.0",
@@ -35,16 +35,18 @@
     "babel-plugin-transform-flow-strip-types": "6.22.0",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-stage-1": "6.24.1",
-    "browser-sync": "^2.18.13",
+    "browser-sync": "2.18.13",
     "conventional-changelog": "1.1.3",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-bump": "2.7.0",
     "gulp-changed": "3.1.0",
+    "gulp-concat": "2.6.1",
     "gulp-eslint": "3.0.1",
     "gulp-ignore": "2.0.2",
     "gulp-plumber": "1.1.0",
+    "gulp-strip-css-comments": "1.2.0",
     "gulp-typescript": "3.2.1",
     "gulp-yuidoc": "0.1.2",
     "isparta": "4.0.0",
