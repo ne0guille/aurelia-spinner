@@ -1,38 +1,41 @@
-import { autoinject, bindable, bindingMode, Container, View, ViewEngine, computedFrom } from 'aurelia-framework';
-import { DOM } from 'aurelia-pal';
+import { inject, bindable, bindingMode, Container, View, ViewEngine } from 'aurelia-framework';
+import { PLATFORM } from 'aurelia-pal';
 
-import { SpinnerConfig, spinnerView } from "./spinner-config";
+import { SpinnerConfig } from "./spinner-config";
 
-@autoinject
+@inject(Element, Container, ViewEngine, 'spinner-config')
 export class SpinnerCustomAttribute {
   private divElement: HTMLElement;
   private target: Element;
-  private readonly spinnerHtml: string = './aurelia-spinner.html';
+  private readonly spinnerHtml: string = PLATFORM.moduleName('spinner.html');
   private config: SpinnerConfig;
-  private _view: string;
+  private _view: string = PLATFORM.moduleName('views/circle.html');
 
   @bindable({ defaultBindingMode: bindingMode.oneWay }) show: boolean = false;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) view: string = undefined;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = false;
 
   static defaultConfig: SpinnerConfig = {
-    view: "src/views/circle.html", //spinnerView.circle
+    spinner: PLATFORM.moduleName('views/circle.html'),
     useBackgroundBlocker: false,
     blockerClass: 'spinner-blocker'
   };
 
-  constructor(private element: Element,
-    private container: Container,
-    private viewEngine: ViewEngine,
-    private spinnerConfig: 'spinner-config') {
+  constructor(private element,
+    private container,
+    private viewEngine,
+    private spinnerConfig
+  ) {
     this.config = Object.assign({}, SpinnerCustomAttribute.defaultConfig);
     console.log(this.config);
     console.log(this.config.blockerClass);
     console.log(this.spinnerConfig);
+    if(this.spinnerConfig.spinner)
+      this.config = Object.assign({}, this.spinnerConfig);
   }
 
   bind() {
-    this.view = this.view || this.config.view;
+    this.view = this.view ||  this.spinnerConfig.spinner;
     this.block = this.block || this.config.useBackgroundBlocker;
 
     if (!this.view) throw new Error("no view has been specified for the spinner");
@@ -49,17 +52,19 @@ export class SpinnerCustomAttribute {
       this.target.classList.remove(this.config.blockerClass);
   }
 
-  viewChanged(newValue: string) {
-    if(!newValue) this._view = this.config.view;
-    
-    console.log(this.view);
-    console.log(spinnerView[newValue]);
-    console.log(newValue);
-    
-    this._view = spinnerView[newValue];
-  }
+  // viewChanged(newValue: string) {
+  //   if(!newValue) this._view = this.config.view;
+
+  //   console.log(this.view);
+  //   console.log(spinnerView[newValue]);
+  //   console.log(newValue);
+
+  //   this._view = spinnerView[newValue];
+  // }
 
   private createSpinner(): void {
+    console.log("createSpinner ");
+
     this.viewEngine.loadViewFactory(this.spinnerHtml).then(factory => {
       const childContainer = this.container.createChild();
       const view = factory.create(childContainer);
@@ -70,14 +75,15 @@ export class SpinnerCustomAttribute {
   }
 
   private removeSpinner(): void {
-    const removeSpinner = DOM.querySelectorAll(`#${this.element.id}`)[0];
+    const removeSpinner = document.querySelectorAll(`#${this.element.id}`)[0];
     removeSpinner.removeChild(this.divElement);
   }
 
   private addElement(view: View): void {
-    const container = DOM.querySelectorAll(`#${this.element.id}`)[0];
+    console.log(view);
+    const container = document.querySelectorAll(`#${this.element.id}`)[0];
 
-    const spinnerDivElement = <HTMLElement>DOM.createElement('div');
+    const spinnerDivElement = <HTMLElement>document.createElement('div');
     view.appendNodesTo(spinnerDivElement);
 
     this.target = this.element.firstElementChild || this.element;

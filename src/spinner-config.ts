@@ -1,33 +1,33 @@
 import { PLATFORM } from "aurelia-framework";
 
 export class SpinnerConfig {
-  view: string;
+  spinner: string;
   useBackgroundBlocker: boolean;
   blockerClass?: string;
 }
 
 // export const spinnerView = {
-//   chasingDots: 'src/views/chasing-dots.html',
-//   circle: 'src/views/circle.html',
-//   cubeGrid: 'src/views/cube-grid.html',
-//   doubleBounce: 'src/views/double-bounce.html',
-//   fadingCircle: 'src/views/fading-circle.html',
-//   pulse: 'src/views/pulse.html',
-//   rotatingPlane: 'src/views/rotating-plane.html',
-//   threeBounce: 'src/views/three-bounce.html',
-//   wanderingCubes: 'src/views/wandering-cubes.html',
-//   wave: 'src/views/wave.html'
+//   chasingDots: 'views/chasing-dots.html',
+//   circle: 'views/circle.html',
+//   cubeGrid: 'views/cube-grid.html',
+//   doubleBounce: 'views/double-bounce.html',
+//   fadingCircle: 'views/fading-circle.html',
+//   pulse: 'views/pulse.html',
+//   rotatingPlane: 'views/rotating-plane.html',
+//   threeBounce: 'views/three-bounce.html',
+//   wanderingCubes: 'views/wandering-cubes.html',
+//   wave: 'views/wave.html'
 // }
 
 export const spinnerView = {
-  chasingDots: PLATFORM.moduleName('src/views/chasing-dots.html'),
-  circle: PLATFORM.moduleName('src/views/circle.html'),
-  cubeGrid: PLATFORM.moduleName('src/views/cube-grid.html'),
-  doubleBounce: PLATFORM.moduleName('src/views/double-bounce.html'),
-  fadingCircle: PLATFORM.moduleName('src/views/fading-circle.html'),
-  pulse: PLATFORM.moduleName('src/views/pulse.html'),
-  rotatingPlane: PLATFORM.moduleName('src/views/rotating-plane.html'),
-  threeBounce: PLATFORM.moduleName('src/views/three-bounce.html'),
-  wanderingCubes: PLATFORM.moduleName('src/views/wandering-cubes.html'),
-  wave: PLATFORM.moduleName('src/views/wave.html')
+  chasingDots: PLATFORM.moduleName('views/chasing-dots.html'),
+  circle: PLATFORM.moduleName('views/circle.html'),
+  cubeGrid: PLATFORM.moduleName('views/cube-grid.html'),
+  doubleBounce: PLATFORM.moduleName('views/double-bounce.html'),
+  fadingCircle: PLATFORM.moduleName('views/fading-circle.html'),
+  pulse: PLATFORM.moduleName('views/pulse.html'),
+  rotatingPlane: PLATFORM.moduleName('views/rotating-plane.html'),
+  threeBounce: PLATFORM.moduleName('views/three-bounce.html'),
+  wanderingCubes: PLATFORM.moduleName('views/wandering-cubes.html'),
+  wave: PLATFORM.moduleName('views/wave.html')
 }

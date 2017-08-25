@@ -1,15 +1,15 @@
 import { PLATFORM } from 'aurelia-pal';
 import { FrameworkConfiguration } from 'aurelia-framework';
 
-import { SpinnerConfig, spinnerView } from "./spinner-config";
+import { SpinnerConfig } from "./spinner-config";
 
 
 export function configure(config: FrameworkConfiguration, spinnerConfig: SpinnerConfig) {
-  config.globalResources('./aurelia-spinner');
+  console.log(spinnerConfig);
+  config.globalResources(PLATFORM.moduleName('./spinner'));
   config.container.registerInstance('spinner-config', spinnerConfig);
 }
 
 export {
-  SpinnerConfig,
-  spinnerView
+  SpinnerConfig
 }
