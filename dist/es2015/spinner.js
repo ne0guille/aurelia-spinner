@@ -17,9 +17,9 @@ var SpinnerCustomAttribute = function () {
         this.viewEngine = viewEngine;
         this.spinnerConfig = spinnerConfig;
         this.spinnerHtml = aurelia_pal_1.PLATFORM.moduleName('spinner.html');
-        this._view = aurelia_pal_1.PLATFORM.moduleName('views/circle.html');
+
         this.show = false;
-        this.view = undefined;
+        this.view = aurelia_pal_1.PLATFORM.moduleName('views/circle.html');
         this.block = false;
         this.config = Object.assign({}, SpinnerCustomAttribute_1.defaultConfig);
         console.log(this.config);
@@ -29,7 +29,9 @@ var SpinnerCustomAttribute = function () {
     }
     SpinnerCustomAttribute_1 = SpinnerCustomAttribute;
     SpinnerCustomAttribute.prototype.bind = function () {
-        this.view = this.view || this.spinnerConfig.spinner;
+        console.log("*******bind**********");
+        this.view = this.spinnerConfig.spinner || this.view;
+        console.log(this.spinnerConfig.spinner);
         this.block = this.block || this.config.useBackgroundBlocker;
         if (!this.view) throw new Error("no view has been specified for the spinner");
     };
@@ -79,7 +81,7 @@ var SpinnerCustomAttribute = function () {
         return htmlElement;
     };
     SpinnerCustomAttribute.defaultConfig = {
-        spinner: aurelia_pal_1.PLATFORM.moduleName('views/circle.html'),
+        spinner: '',
         useBackgroundBlocker: false,
         blockerClass: 'spinner-blocker'
     };

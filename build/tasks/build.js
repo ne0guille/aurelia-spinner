@@ -48,8 +48,7 @@ function buildFromTs(tsProject, outputPath, includeEs6Dts) {
 
 gulp.task('build-html', function () {
   return gulp.src(paths.html)
-    .pipe(gulp.dest(paths.output + 'es2015'))
-    .pipe(gulp.dest(paths.output + 'commonjs'));
+    .pipe(gulp.dest(paths.output));
 });
 
 gulp.task('build-css', function () {

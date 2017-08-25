@@ -1,7 +1,7 @@
 import { PLATFORM } from 'aurelia-pal';
 import { FrameworkConfiguration } from 'aurelia-framework';
 
-import { SpinnerConfig } from "./spinner-config";
+import { SpinnerConfig, spinnerView } from "./spinner-config";
 
 
 export function configure(config: FrameworkConfiguration, spinnerConfig: SpinnerConfig) {
@@ -11,5 +11,6 @@ export function configure(config: FrameworkConfiguration, spinnerConfig: Spinner
 }
 
 export {
-  SpinnerConfig
+  SpinnerConfig,
+  spinnerView
 }

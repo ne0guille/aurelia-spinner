@@ -9,14 +9,14 @@ export class SpinnerCustomAttribute {
   private target: Element;
   private readonly spinnerHtml: string = PLATFORM.moduleName('spinner.html');
   private config: SpinnerConfig;
-  private _view: string = PLATFORM.moduleName('views/circle.html');
+  //private _view: string = PLATFORM.moduleName('views/circle.html');
 
   @bindable({ defaultBindingMode: bindingMode.oneWay }) show: boolean = false;
-  @bindable({ defaultBindingMode: bindingMode.oneTime }) view: string = undefined;
+  @bindable({ defaultBindingMode: bindingMode.oneTime }) view: string = PLATFORM.moduleName('views/circle.html')
   @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = false;
 
   static defaultConfig: SpinnerConfig = {
-    spinner: PLATFORM.moduleName('views/circle.html'),
+    spinner: '',
     useBackgroundBlocker: false,
     blockerClass: 'spinner-blocker'
   };
@@ -35,7 +35,9 @@ export class SpinnerCustomAttribute {
   }
 
   bind() {
-    this.view = this.view ||  this.spinnerConfig.spinner;
+    console.log("*******bind**********");
+    this.view = this.spinnerConfig.spinner || this.view;
+    console.log(this.spinnerConfig.spinner);
     this.block = this.block || this.config.useBackgroundBlocker;
 
     if (!this.view) throw new Error("no view has been specified for the spinner");
