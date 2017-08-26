@@ -7,7 +7,6 @@ http://aurelia-spinner-demo.azurewebsites.net/
 **Installation**
 
 ```npm install aurelia-spinner --save```
--------------
 
 **Plugin Setup**
 The only required attribute its the spinner view.
@@ -60,13 +59,12 @@ You need to specify an unique id for the element using the spinner attribute.
 Usage with default configurations
  ```
    <div id="div1" spinner="show.bind: showVM"></div>
-
   
    <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true">
   </div>
   ```
   **Options**
-
+```
   Bindable used to show or hide the spinner.
   show: boolean = false; 
 
@@ -75,8 +73,6 @@ Usage with default configurations
 
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
-
 ```
-
   **Dependencies**
   "spinkit": https://github.com/tobiasahlin/SpinKit
