@@ -8,12 +8,12 @@ describe('testing spinner', () => {
 
   beforeEach(() => {
     isLoadingFalse = false;
-    const view = `<div id="spinner-div" spinner="show.bind: isLoading" style="height: 500px">
+    const view = `<div id="spinner-test" spinner="show.bind: isLoading" style="height: 500px">
                     <p>test</p>
                  </div>`;
 
     component = StageComponent
-      .withResources(PLATFORM.moduleName('resources/attributes/spinner/spinner'))
+      .withResources(PLATFORM.moduleName('spinner'))
       .inView(view)
       .boundTo({ isLoading: isLoadingFalse });
 
@@ -37,13 +37,12 @@ describe('testing spinner', () => {
 
   it('should toogle on show changed', done => {
     component.create(bootstrap).then(() => {
-      let spy = spyOn(component.viewModel, 'showChanged')
+      const spy = spyOn(component.viewModel, 'showChanged')
         .and.callFake(() => component.viewModel.show = !isLoadingFalse);
 
       component.viewModel.showChanged();
 
       taskQueue.queueTask(() => {
-        // const spinner = component.element.querySelector('.spinner');
         expect(component.viewModel.show).toBeTruthy();
         expect(spy).toHaveBeenCalled();
         done();

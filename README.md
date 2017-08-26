@@ -55,14 +55,12 @@ or you can import a single file under the spinner folder.
 css: 'spinkit/css/spinners/9-cube-grid.css';
 
 **Usage**
+You need to specify an unique id for the element using the spinner attribute.
 Usage with default configurations
  ```
-   <div spinner="show.bind: showVM"></div>
-
+   <div id="div1" spinner="show.bind: showVM"></div>
   
-   <div spinner="show.bind: showVM; 
-                 view.bind: viewVM;
-                 block: true">
+   <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true">
   </div>
   ```
   **Options**
