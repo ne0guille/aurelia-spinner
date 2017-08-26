@@ -27,7 +27,6 @@ var SpinnerCustomAttribute = function () {
     SpinnerCustomAttribute.prototype.bind = function () {
         this.view = this.view || this.config.spinner;
         this.block = this.block === undefined ? this.config.useBackgroundBlocker : this.block;
-        console.log(this.block);
         if (!this.view) throw new Error("no view has been specified for the spinner");
     };
     SpinnerCustomAttribute.prototype.attached = function () {
