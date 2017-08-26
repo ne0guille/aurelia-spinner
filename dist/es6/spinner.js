@@ -56,10 +56,11 @@ var SpinnerCustomAttribute = (function () {
         var spinnerDivElement = document.createElement('div');
         view.appendNodesTo(spinnerDivElement);
         this.target = this.element.children.length === 1 ? this.element.firstElementChild : this.element;
-        console.log(this.target);
         this.divElement = this.setElementStyle(this.element, spinnerDivElement);
         if (this.block)
             this.target.classList.add(this.config.blockerClass);
+        //todo check si es custom element o como para decirdir hacer eso o
+        //container.insertBefore(this.divElement, container.firstChild););
         container.firstElementChild.appendChild(this.divElement);
     };
     // todo fix too recalculate element height
