@@ -69,7 +69,9 @@ export class SpinnerCustomAttribute {
     this.divElement = this.setElementStyle(this.element, spinnerDivElement);
     if (this.block) this.target.classList.add(this.config.blockerClass);
 
-    container.insertBefore(this.divElement, container.firstChild);
+    //todo check si es custom element o como para decirdir hacer eso o
+    //container.insertBefore(this.divElement, container.firstChild););
+    container.firstElementChild.appendChild(this.divElement);
   }
 
   // todo fix too recalculate element height

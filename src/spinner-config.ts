@@ -12,6 +12,7 @@ export const spinnerViews = {
   cubeGrid: PLATFORM.moduleName('aurelia-spinner/dist/views/cube-grid.html'),
   doubleBounce: PLATFORM.moduleName('aurelia-spinner/dist/views/double-bounce.html'),
   fadingCircle: PLATFORM.moduleName('aurelia-spinner/dist/views/fading-circle.html'),
+  foldingCube: PLATFORM.moduleName('aurelia-spinner/dist/views/folding-cube.html'),
   pulse: PLATFORM.moduleName('aurelia-spinner/dist/views/pulse.html'),
   rotatingPlane: PLATFORM.moduleName('aurelia-spinner/dist/views/rotating-plane.html'),
   threeBounce: PLATFORM.moduleName('aurelia-spinner/dist/views/three-bounce.html'),

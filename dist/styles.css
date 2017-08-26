@@ -3,7 +3,7 @@
   left: inherit;
   top: inherit;
   position: relative;
-  
+  background: rgba(225, 225, 225, .3);
   height: auto;
   opacity: .8;
   animation: none !important;

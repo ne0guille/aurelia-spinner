@@ -13,6 +13,7 @@ exports.spinnerViews = {
     cubeGrid: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/cube-grid.html'),
     doubleBounce: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/double-bounce.html'),
     fadingCircle: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/fading-circle.html'),
+    foldingCube: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/folding-cube.html'),
     pulse: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/pulse.html'),
     rotatingPlane: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/rotating-plane.html'),
     threeBounce: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/three-bounce.html'),
