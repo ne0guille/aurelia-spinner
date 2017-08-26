@@ -5,8 +5,8 @@ Aurelia custom attribute to add awesome spinners based on http://tobiasahlin.com
 http://aurelia-spinner-demo.azurewebsites.net/
 
 **Installation**
-`npm install aurelia-spinner --save`
--------------
+
+```npm install aurelia-spinner --save```
 
 **Plugin Setup**
 The only required attribute its the spinner view.
@@ -33,6 +33,7 @@ You can see all of the spinners available in the demo site.
   cubeGrid,
   doubleBounce,
   fadingCircle,
+  foldingCube,
   pulse,
   rotatingPlane,
   threeBounce,
@@ -56,13 +57,16 @@ css: 'spinkit/css/spinners/9-cube-grid.css';
 **Usage**
 Usage with default configurations
  ```
+   <div spinner="show.bind: showVM"></div>
+
+  
    <div spinner="show.bind: showVM; 
                  view.bind: viewVM;
                  block: true">
   </div>
   ```
   **Options**
-
+```
   Bindable used to show or hide the spinner.
   show: boolean = false; 
 
@@ -71,8 +75,6 @@ Usage with default configurations
 
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
-
 ```
-
   **Dependencies**
   "spinkit": https://github.com/tobiasahlin/SpinKit
