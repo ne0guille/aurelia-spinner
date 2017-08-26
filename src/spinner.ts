@@ -29,7 +29,8 @@ export class SpinnerCustomAttribute {
 
   bind() {
     this.view = this.view || this.config.spinner;
-    this.block = this.block || this.config.useBackgroundBlocker;
+    this.block = this.block === undefined ? this.config.useBackgroundBlocker : this.block;
+    
     if (!this.view) throw new Error("no view has been specified for the spinner");
   }
 
