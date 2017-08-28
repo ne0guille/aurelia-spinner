@@ -11,7 +11,8 @@ http://aurelia-spinner-demo.azurewebsites.net/
 **Plugin Setup**
 The only required attribute its the spinner view.
 
-```import { SpinnerConfig, spinnerViews } from 'aurelia-spinner';
+```
+import { SpinnerConfig, spinnerViews } from 'aurelia-spinner';
 
 const spinnerConfig: SpinnerConfig = {
     spinner: spinnerViews.circle,
