@@ -45,15 +45,17 @@ You can see all of the spinners available in the demo site.
 
 **add style in webpack**
 if you use te spinner-block class you need to add this file.
-
+```
 'aurelia-spinner/dist/styles.css'
 
 css: 'spinkit/css/spinkit.css;
 sass: 'spinkit/scss/spinkit.scss;
 
-or you can import a single file under the spinner folder.
+or you can import a single spinner file under the spinner folder.
 
 css: 'spinkit/css/spinners/9-cube-grid.css';
+sass: 'spinkit/scss/spinners/9-cube-grid.scss';
+```
 
 **Usage**
 You need to specify an unique id for the element using the spinner attribute.
