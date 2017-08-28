@@ -1,36 +1,30 @@
 import { inject, bindable, bindingMode, Container, View, ViewEngine } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 
-import { SpinnerConfig, spinnerViews, blockerClass } from "./spinner-config";
+import { SpinnerConfig, spinnerViews } from "./spinner-config";
 
 @inject(Element, Container, ViewEngine, 'spinner-config')
 export class SpinnerCustomAttribute {
   private divElement: HTMLElement;
   private target: Element;
   private readonly spinnerHtml: string = PLATFORM.moduleName('aurelia-spinner/dist/spinner.html');
-  private config: SpinnerConfig;
+  private config: SpinnerConfig = new SpinnerConfig();
 
   @bindable({ defaultBindingMode: bindingMode.oneWay }) show: boolean = false;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) view: string = undefined;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = undefined;
 
-  static defaultConfig: SpinnerConfig = {
-    spinner: undefined,
-    useBackgroundBlocker: false,
-    blockerClass: blockerClass
-  };
-
   constructor(private element: Element,
     private container: Container,
     private viewEngine: ViewEngine,
     private spinnerConfig: SpinnerConfig) {
-    if (spinnerConfig) this.config = Object.assign({}, SpinnerCustomAttribute.defaultConfig, this.spinnerConfig);
+    if (spinnerConfig) this.config = Object.freeze({ ...this.config, ...this.spinnerConfig });
   }
 
   bind() {
     this.view = this.view || this.config.spinner;
     this.block = this.block === undefined ? this.config.useBackgroundBlocker : this.block;
-    
+
     if (!this.view) throw new Error("no view has been specified for the spinner");
   }
 
@@ -39,7 +33,7 @@ export class SpinnerCustomAttribute {
   }
 
   showChanged(showSpinner: boolean) {
-    if (!this.target && !this.block) return;
+    if (!this.target || !this.block) return;
 
     showSpinner ? this.target.classList.add(this.config.blockerClass) :
       this.target.classList.remove(this.config.blockerClass);
@@ -47,8 +41,8 @@ export class SpinnerCustomAttribute {
 
   private createSpinner(): void {
     this.viewEngine.loadViewFactory(this.spinnerHtml).then(factory => {
-      const childContainer = this.container.createChild();
-      const view = factory.create(childContainer);
+      const childContainer: Container = this.container.createChild();
+      const view: View = factory.create(childContainer);
       view.bind(this);
 
       this.addElement(view);
@@ -56,13 +50,13 @@ export class SpinnerCustomAttribute {
   }
 
   private removeSpinner(): void {
-    const removeSpinner = document.querySelectorAll(`#${this.element.id}`)[0];
+    const removeSpinner: Element = document.querySelectorAll(`#${this.element.id}`)[0];
     removeSpinner.removeChild(this.divElement);
   }
 
   private addElement(view: View): void {
-    const container = document.querySelectorAll(`#${this.element.id}`)[0];
-    const spinnerDivElement = <HTMLElement>document.createElement('div');
+    const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
+    const spinnerDivElement: HTMLElement = <HTMLElement>document.createElement('div');
 
     view.appendNodesTo(spinnerDivElement);
 
@@ -70,12 +64,9 @@ export class SpinnerCustomAttribute {
     this.divElement = this.setElementStyle(this.element, spinnerDivElement);
     if (this.block) this.target.classList.add(this.config.blockerClass);
 
-    //todo check si es custom element o como para decirdir hacer eso o
-    //container.insertBefore(this.divElement, container.firstChild););
     container.firstElementChild.appendChild(this.divElement);
   }
 
-  // todo fix too recalculate element height
   private setElementStyle(element: any, htmlElement: HTMLElement): HTMLElement {
     element.style.position = 'relative';
     htmlElement.style.position = 'absolute';

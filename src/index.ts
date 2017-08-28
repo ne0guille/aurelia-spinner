@@ -4,7 +4,7 @@ import { FrameworkConfiguration } from 'aurelia-framework';
 import { SpinnerConfig, spinnerViews } from "./spinner-config";
 
 
-export function configure(config: FrameworkConfiguration, spinnerConfig: SpinnerConfig) {
+export function configure(config: FrameworkConfiguration, spinnerConfig: SpinnerConfig): void {
   config.globalResources(PLATFORM.moduleName('./spinner'));
   config.container.registerInstance('spinner-config', spinnerConfig);
 }
@@ -12,4 +12,4 @@ export function configure(config: FrameworkConfiguration, spinnerConfig: Spinner
 export {
   SpinnerConfig,
   spinnerViews
-}
+};
