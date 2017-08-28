@@ -2,8 +2,13 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
+var blockerClass = 'spinner-blocker';
 var SpinnerConfig = function () {
-    function SpinnerConfig() {}
+    function SpinnerConfig() {
+        this.spinner = undefined;
+        this.useBackgroundBlocker = false;
+        this.blockerClass = blockerClass;
+    }
     return SpinnerConfig;
 }();
 exports.SpinnerConfig = SpinnerConfig;
@@ -20,5 +25,4 @@ exports.spinnerViews = {
     wanderingCubes: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wandering-cubes.html'),
     wave: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html')
 };
-exports.blockerClass = 'spinner-blocker';
 //# sourceMappingURL=spinner-config.js.map

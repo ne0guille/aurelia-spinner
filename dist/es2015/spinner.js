@@ -1,5 +1,12 @@
 "use strict";
 
+var __assign = this && this.__assign || Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
     var c = arguments.length,
         r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
@@ -18,12 +25,12 @@ var SpinnerCustomAttribute = function () {
         this.viewEngine = viewEngine;
         this.spinnerConfig = spinnerConfig;
         this.spinnerHtml = aurelia_pal_1.PLATFORM.moduleName('aurelia-spinner/dist/spinner.html');
+        this.config = new spinner_config_1.SpinnerConfig();
         this.show = false;
         this.view = undefined;
         this.block = undefined;
-        if (spinnerConfig) this.config = Object.assign({}, SpinnerCustomAttribute_1.defaultConfig, this.spinnerConfig);
+        if (spinnerConfig) this.config = Object.freeze(__assign({}, this.config, this.spinnerConfig));
     }
-    SpinnerCustomAttribute_1 = SpinnerCustomAttribute;
     SpinnerCustomAttribute.prototype.bind = function () {
         this.view = this.view || this.config.spinner;
         this.block = this.block === undefined ? this.config.useBackgroundBlocker : this.block;
@@ -33,7 +40,7 @@ var SpinnerCustomAttribute = function () {
         this.createSpinner();
     };
     SpinnerCustomAttribute.prototype.showChanged = function (showSpinner) {
-        if (!this.target && !this.block) return;
+        if (!this.target || !this.block) return;
         showSpinner ? this.target.classList.add(this.config.blockerClass) : this.target.classList.remove(this.config.blockerClass);
     };
     SpinnerCustomAttribute.prototype.createSpinner = function () {
@@ -56,10 +63,8 @@ var SpinnerCustomAttribute = function () {
         this.target = this.element.children.length === 1 ? this.element.firstElementChild : this.element;
         this.divElement = this.setElementStyle(this.element, spinnerDivElement);
         if (this.block) this.target.classList.add(this.config.blockerClass);
-
         container.firstElementChild.appendChild(this.divElement);
     };
-
     SpinnerCustomAttribute.prototype.setElementStyle = function (element, htmlElement) {
         element.style.position = 'relative';
         htmlElement.style.position = 'absolute';
@@ -68,17 +73,11 @@ var SpinnerCustomAttribute = function () {
         htmlElement.style.left = 'calc(50% - 35px)';
         return htmlElement;
     };
-    SpinnerCustomAttribute.defaultConfig = {
-        spinner: undefined,
-        useBackgroundBlocker: false,
-        blockerClass: spinner_config_1.blockerClass
-    };
     __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneWay })], SpinnerCustomAttribute.prototype, "show", void 0);
     __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })], SpinnerCustomAttribute.prototype, "view", void 0);
     __decorate([aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })], SpinnerCustomAttribute.prototype, "block", void 0);
-    SpinnerCustomAttribute = SpinnerCustomAttribute_1 = __decorate([aurelia_framework_1.inject(Element, aurelia_framework_1.Container, aurelia_framework_1.ViewEngine, 'spinner-config')], SpinnerCustomAttribute);
+    SpinnerCustomAttribute = __decorate([aurelia_framework_1.inject(Element, aurelia_framework_1.Container, aurelia_framework_1.ViewEngine, 'spinner-config')], SpinnerCustomAttribute);
     return SpinnerCustomAttribute;
-    var SpinnerCustomAttribute_1;
 }();
 exports.SpinnerCustomAttribute = SpinnerCustomAttribute;
 //# sourceMappingURL=spinner.js.map

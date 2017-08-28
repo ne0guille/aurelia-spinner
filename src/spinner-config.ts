@@ -1,9 +1,11 @@
 import { PLATFORM } from "aurelia-framework";
 
+const blockerClass: string = 'spinner-blocker';
+
 export class SpinnerConfig {
-  spinner: string;
-  useBackgroundBlocker?: boolean;
-  blockerClass?: string;
+  spinner: string = undefined;
+  useBackgroundBlocker?: boolean = false;
+  blockerClass?: string = blockerClass;
 }
 
 export const spinnerViews = {
@@ -19,5 +21,3 @@ export const spinnerViews = {
   wanderingCubes: PLATFORM.moduleName('aurelia-spinner/dist/views/wandering-cubes.html'),
   wave: PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html')
 }
-
-export const blockerClass = 'spinner-blocker';
