@@ -58,9 +58,12 @@ css: 'spinkit/css/spinners/9-cube-grid.css';
 You need to specify an unique id for the element using the spinner attribute.
 Usage with default configurations
  ```
-   <div id="div1" spinner="show.bind: showVM"></div>
-  
-   <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true">
+   
+  <div class="container">
+    <div id="div1" spinner="show.bind: showVM"></div>
+  </div>
+
+  <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
   </div>
   ```
   **Options**
@@ -73,6 +76,22 @@ Usage with default configurations
 
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
-```
+
+  If you apply the spinner attribute on the element acting as the container, you need to specify it as is-container: true. Otherwise it will apply spinner outside of the element node.
+  isContainer: boolean = false;
+
+  example: 
+
+  You need to specify is-container bindable in this case
+  <my-custom-component id="spinnerContainer" spinner="show.bind: show; is-container: true">
+  </my-custom-component>
+
+  You **dont** need to specify is-container bindable in this case
+  <div id="spinnerContainer>
+    <my-custom-component id="myId" spinner="show.bind: show">
+  </div>
+ ```
+ 
+
   **Dependencies**
   "spinkit": https://github.com/tobiasahlin/SpinKit

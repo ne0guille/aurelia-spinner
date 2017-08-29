@@ -1,20 +1,14 @@
 {
+  "extends": "./tsconfig.build",
   "compilerOptions": {
-    "outDir": "./dist",
-    "allowJs": true,
-    "experimentalDecorators": true,
-    "sourceRoot": "src",
-    "target": "es5",
-    "lib": [
-      "es2017",
-      "dom"
-    ]
+    "outDir": "dist/test",
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
   "exclude": [
-    "node_modules",
-    "dist"
+    ".vscode",
+    "dist",
+    "doc",
+    "node_modules"
   ]
 }

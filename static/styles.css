@@ -10,3 +10,7 @@
   pointer-events: none;
 }
 
+.spinner-container {
+  position: relative;
+}
+
