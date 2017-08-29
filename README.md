@@ -20,7 +20,7 @@ const spinnerConfig: SpinnerConfig = {
     blockerClass: 'my-default-overlay-background'
 };
  
-aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner', config => spinnerConfig))
+aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner', spinnerConfig))
 
  ```
 
