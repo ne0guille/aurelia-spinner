@@ -23,9 +23,10 @@ export class SpinnerService {
 
     view.bind(self);
 
-    const spinnerContainer = this.getSpinnerContainerElement(element, self.isContainer);
+    const spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
+    const overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
+    console.log(overlayContainer);
     this.addElement(element, spinnerContainer, view);
-    const overlayContainer = element.firstElementChild !== null ? element.firstElementChild : element;
 
     if (this.config.useBackgroundOverlay) this.toogleBackgroundOverlay(overlayContainer, true);
 
@@ -33,7 +34,7 @@ export class SpinnerService {
   }
 
   public toogleBackgroundOverlay(target: Element, showSpinner: boolean) {
-    if (this.config.blockerClass)
+    if (target && this.config.blockerClass)
       showSpinner ? target.classList.add(this.config.blockerClass) :
         target.classList.remove(this.config.blockerClass);
   }
@@ -53,25 +54,30 @@ export class SpinnerService {
     const selector: string = `#${element.id}.${spinnerClass}`;
     const container: Element = document.querySelectorAll(selector)[0];
 
-    let spinnerContainer = container;
+    const isCustomElement: boolean = isContainer || this.isCustomElement(container.tagName);
 
-    if (!isContainer && container.parentElement !== null)
-      spinnerContainer = container.parentElement;
-    else if (!isContainer && container.firstElementChild !== null)
-      spinnerContainer = container.firstElementChild;
+    const spinnerContainer = isCustomElement && container.firstElementChild ?
+      container.firstElementChild : container;
+    //todo check use parent?
+    // if (!isCustomElement && container.parentElement !== null)
+    //   spinnerContainer = container.parentElement;
+    // else if (!isCustomElement && container.firstElementChild !== null)
+    //   spinnerContainer = container.firstElementChild;
 
-    console.log(spinnerContainer);
     spinnerContainer.classList.add('spinner-container');
 
     return spinnerContainer;
+  }
+
+  private isCustomElement(tagName: string) {
+    return tagName.includes('-');
   }
 
   private setElementStyle(element: Element, htmlElement: HTMLElement): HTMLElement {
     const elementRect: ClientRect = element.getBoundingClientRect();
     const height = elementRect.height;
     let top: number = elementRect.top + height;
-    console.log('top' + top);
-    console.log('height' + height);
+    console.log(elementRect);
     const isOverflow = height > window.innerHeight;
 
     top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);

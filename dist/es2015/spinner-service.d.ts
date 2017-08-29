@@ -11,5 +11,6 @@ export declare class SpinnerService {
     toogleBackgroundOverlay(target: Element, showSpinner: boolean): void;
     private addElement(element, container, view);
     private getSpinnerContainerElement(element, isContainer);
+    private isCustomElement(tagName);
     private setElementStyle(element, htmlElement);
 }

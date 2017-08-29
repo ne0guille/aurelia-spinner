@@ -9,19 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var spinner_service_1 = require("./spinner-service");
 var SpinnerCustomAttribute = (function () {
-    function SpinnerCustomAttribute(element, spinnerService, spinnerConfig) {
+    function SpinnerCustomAttribute(element, spinnerService) {
         this.element = element;
         this.spinnerService = spinnerService;
-        this.spinnerConfig = spinnerConfig;
         this.show = false;
         this.view = undefined;
         this.block = false;
-        this.isContainer = false;
-        // if (spinnerConfig) this.config = Object.freeze({ ...this.config, ...this.spinnerConfig });        
+        this.isComponent = false;
     }
     SpinnerCustomAttribute.prototype.bind = function () {
-        this.view = this.view || this.spinnerConfig.spinner;
-        this.block = this.block === undefined ? !!this.spinnerConfig.useBackgroundOverlay : this.block;
+        this.view = this.view || this.spinnerService.config.spinner;
+        this.block = !!(this.block || this.spinnerService.config.useBackgroundOverlay);
         if (!this.view)
             throw new Error("no view has been specified for the spinner");
     };
@@ -46,9 +44,9 @@ var SpinnerCustomAttribute = (function () {
     ], SpinnerCustomAttribute.prototype, "block", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
-    ], SpinnerCustomAttribute.prototype, "isContainer", void 0);
+    ], SpinnerCustomAttribute.prototype, "isComponent", void 0);
     SpinnerCustomAttribute = __decorate([
-        aurelia_framework_1.inject(Element, spinner_service_1.SpinnerService, 'spinner-config')
+        aurelia_framework_1.inject(Element, spinner_service_1.SpinnerService)
     ], SpinnerCustomAttribute);
     return SpinnerCustomAttribute;
 }());

@@ -7,19 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { inject, bindable, bindingMode } from 'aurelia-framework';
 import { SpinnerService } from "./spinner-service";
 let SpinnerCustomAttribute = class SpinnerCustomAttribute {
-    constructor(element, spinnerService, spinnerConfig) {
+    constructor(element, spinnerService) {
         this.element = element;
         this.spinnerService = spinnerService;
-        this.spinnerConfig = spinnerConfig;
         this.show = false;
         this.view = undefined;
         this.block = false;
-        this.isContainer = false;
-        // if (spinnerConfig) this.config = Object.freeze({ ...this.config, ...this.spinnerConfig });        
+        this.isComponent = false;
     }
     bind() {
-        this.view = this.view || this.spinnerConfig.spinner;
-        this.block = this.block === undefined ? !!this.spinnerConfig.useBackgroundOverlay : this.block;
+        this.view = this.view || this.spinnerService.config.spinner;
+        this.block = !!(this.block || this.spinnerService.config.useBackgroundOverlay);
         if (!this.view)
             throw new Error("no view has been specified for the spinner");
     }
@@ -44,8 +42,8 @@ __decorate([
 ], SpinnerCustomAttribute.prototype, "block", void 0);
 __decorate([
     bindable({ defaultBindingMode: bindingMode.oneTime })
-], SpinnerCustomAttribute.prototype, "isContainer", void 0);
+], SpinnerCustomAttribute.prototype, "isComponent", void 0);
 SpinnerCustomAttribute = __decorate([
-    inject(Element, SpinnerService, 'spinner-config')
+    inject(Element, SpinnerService)
 ], SpinnerCustomAttribute);
 export { SpinnerCustomAttribute };

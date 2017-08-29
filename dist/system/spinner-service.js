@@ -86,9 +86,11 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                                     childContainer = this.container.createChild();
                                     view = factory.create(childContainer);
                                     view.bind(self);
-                                    spinnerContainer = this.getSpinnerContainerElement(element, self.isContainer);
+                                    spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
+                                    console.log('isComponent ' + self.isComponent);
+                                    overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
+                                    console.log(overlayContainer);
                                     this.addElement(element, spinnerContainer, view);
-                                    overlayContainer = element.firstElementChild !== null ? element.firstElementChild : element;
                                     if (this.config.useBackgroundOverlay)
                                         this.toogleBackgroundOverlay(overlayContainer, true);
                                     return [2 /*return*/, overlayContainer];
@@ -97,7 +99,7 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                     });
                 };
                 SpinnerService.prototype.toogleBackgroundOverlay = function (target, showSpinner) {
-                    if (this.config.blockerClass)
+                    if (target && this.config.blockerClass)
                         showSpinner ? target.classList.add(this.config.blockerClass) :
                             target.classList.remove(this.config.blockerClass);
                 };
@@ -111,21 +113,24 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                     var spinnerClass = element.classList.toString().split(' ').join('.');
                     var selector = "#" + element.id + "." + spinnerClass;
                     var container = document.querySelectorAll(selector)[0];
-                    var spinnerContainer = container;
-                    if (!isContainer && container.parentElement !== null)
-                        spinnerContainer = container.parentElement;
-                    else if (!isContainer && container.firstElementChild !== null)
-                        spinnerContainer = container.firstElementChild;
-                    console.log(spinnerContainer);
+                    var isCustomElement = isContainer || this.isCustomElement(container.tagName);
+                    var spinnerContainer = isCustomElement && container.firstElementChild ?
+                        container.firstElementChild : container;
+                    // if (!isCustomElement && container.parentElement !== null)
+                    //   spinnerContainer = container.parentElement;
+                    // else if (!isCustomElement && container.firstElementChild !== null)
+                    //   spinnerContainer = container.firstElementChild;
                     spinnerContainer.classList.add('spinner-container');
                     return spinnerContainer;
+                };
+                SpinnerService.prototype.isCustomElement = function (tagName) {
+                    return tagName.includes('-');
                 };
                 SpinnerService.prototype.setElementStyle = function (element, htmlElement) {
                     var elementRect = element.getBoundingClientRect();
                     var height = elementRect.height;
                     var top = elementRect.top + height;
-                    console.log('top' + top);
-                    console.log('height' + height);
+                    console.log(elementRect);
                     var isOverflow = height > window.innerHeight;
                     top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
                     if (top > 50)

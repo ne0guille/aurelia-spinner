@@ -32,16 +32,18 @@ let SpinnerService = class SpinnerService {
             const childContainer = this.container.createChild();
             const view = factory.create(childContainer);
             view.bind(self);
-            const spinnerContainer = this.getSpinnerContainerElement(element, self.isContainer);
+            const spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
+            console.log('isComponent ' + self.isComponent);
+            const overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
+            console.log(overlayContainer);
             this.addElement(element, spinnerContainer, view);
-            const overlayContainer = element.firstElementChild !== null ? element.firstElementChild : element;
             if (this.config.useBackgroundOverlay)
                 this.toogleBackgroundOverlay(overlayContainer, true);
             return overlayContainer;
         });
     }
     toogleBackgroundOverlay(target, showSpinner) {
-        if (this.config.blockerClass)
+        if (target && this.config.blockerClass)
             showSpinner ? target.classList.add(this.config.blockerClass) :
                 target.classList.remove(this.config.blockerClass);
     }
@@ -55,21 +57,24 @@ let SpinnerService = class SpinnerService {
         const spinnerClass = element.classList.toString().split(' ').join('.');
         const selector = `#${element.id}.${spinnerClass}`;
         const container = document.querySelectorAll(selector)[0];
-        let spinnerContainer = container;
-        if (!isContainer && container.parentElement !== null)
-            spinnerContainer = container.parentElement;
-        else if (!isContainer && container.firstElementChild !== null)
-            spinnerContainer = container.firstElementChild;
-        console.log(spinnerContainer);
+        const isCustomElement = isContainer || this.isCustomElement(container.tagName);
+        const spinnerContainer = isCustomElement && container.firstElementChild ?
+            container.firstElementChild : container;
+        // if (!isCustomElement && container.parentElement !== null)
+        //   spinnerContainer = container.parentElement;
+        // else if (!isCustomElement && container.firstElementChild !== null)
+        //   spinnerContainer = container.firstElementChild;
         spinnerContainer.classList.add('spinner-container');
         return spinnerContainer;
+    }
+    isCustomElement(tagName) {
+        return tagName.includes('-');
     }
     setElementStyle(element, htmlElement) {
         const elementRect = element.getBoundingClientRect();
         const height = elementRect.height;
         let top = elementRect.top + height;
-        console.log('top' + top);
-        console.log('height' + height);
+        console.log(elementRect);
         const isOverflow = height > window.innerHeight;
         top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
         if (top > 50)
