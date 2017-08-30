@@ -8,7 +8,6 @@ define(["require", "exports", "aurelia-framework", "./spinner-service"], functio
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var SpinnerCustomAttribute = (function () {
-        // @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
         function SpinnerCustomAttribute(element, spinnerService) {
             this.element = element;
             this.spinnerService = spinnerService;

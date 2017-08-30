@@ -72,7 +72,6 @@ define(["require", "exports", "aurelia-framework", "aurelia-pal", "./spinner-con
                             view = factory.create(childContainer);
                             view.bind(self);
                             spinnerContainer = this.getSpinnerContainerElement(element);
-                            console.log(spinnerContainer);
                             this.addElement(element, spinnerContainer, view);
                             if (this.config.useBackgroundOverlay)
                                 this.toogleBackgroundOverlay(element, true);
@@ -105,15 +104,11 @@ define(["require", "exports", "aurelia-framework", "aurelia-pal", "./spinner-con
         SpinnerService.prototype.setElementStyle = function (element, htmlElement) {
             var elementRect = element.getBoundingClientRect();
             var height = elementRect.height;
-            var top = elementRect.top + height;
-            console.log(elementRect);
             var isOverflow = height > window.innerHeight;
-            top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
-            var value = isOverflow ? 30 : 50;
-            console.log(top);
+            var top = isOverflow ? 30 : 50;
             htmlElement.style.position = 'absolute';
             htmlElement.style.zIndex = '999';
-            htmlElement.style.top = "calc(" + value + "% - 65px)";
+            htmlElement.style.top = "calc(" + top + "% - 65px)";
             htmlElement.style.left = "calc(50% - 35px)";
             return htmlElement;
         };

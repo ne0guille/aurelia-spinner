@@ -19,7 +19,6 @@ System.register(["aurelia-framework", "./spinner-service"], function (exports_1,
         ],
         execute: function () {
             SpinnerCustomAttribute = (function () {
-                // @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
                 function SpinnerCustomAttribute(element, spinnerService) {
                     this.element = element;
                     this.spinnerService = spinnerService;

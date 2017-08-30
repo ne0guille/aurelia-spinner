@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { inject, bindable, bindingMode } from 'aurelia-framework';
 import { SpinnerService } from "./spinner-service";
 let SpinnerCustomAttribute = class SpinnerCustomAttribute {
-    // @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
     constructor(element, spinnerService) {
         this.element = element;
         this.spinnerService = spinnerService;
