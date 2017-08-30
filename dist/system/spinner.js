@@ -19,13 +19,13 @@ System.register(["aurelia-framework", "./spinner-service"], function (exports_1,
         ],
         execute: function () {
             SpinnerCustomAttribute = (function () {
+                // @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
                 function SpinnerCustomAttribute(element, spinnerService) {
                     this.element = element;
                     this.spinnerService = spinnerService;
                     this.show = false;
                     this.view = undefined;
                     this.block = false;
-                    this.isComponent = false;
                 }
                 SpinnerCustomAttribute.prototype.bind = function () {
                     this.view = this.view || this.spinnerService.config.spinner;
@@ -52,9 +52,6 @@ System.register(["aurelia-framework", "./spinner-service"], function (exports_1,
                 __decorate([
                     aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
                 ], SpinnerCustomAttribute.prototype, "block", void 0);
-                __decorate([
-                    aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
-                ], SpinnerCustomAttribute.prototype, "isComponent", void 0);
                 SpinnerCustomAttribute = __decorate([
                     aurelia_framework_1.inject(Element, spinner_service_1.SpinnerService)
                 ], SpinnerCustomAttribute);

@@ -6,7 +6,6 @@ export declare class SpinnerCustomAttribute {
     show: boolean;
     view?: string;
     block: boolean;
-    isComponent: boolean;
     constructor(element: Element, spinnerService: SpinnerService);
     bind(): void;
     attached(): void;

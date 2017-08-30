@@ -10,7 +10,6 @@ export declare class SpinnerService {
     createSpinner(element: Element, self: any): Promise<Element>;
     toogleBackgroundOverlay(target: Element, showSpinner: boolean): void;
     private addElement(element, container, view);
-    private getSpinnerContainerElement(element, isContainer);
-    private isCustomElement(tagName);
+    private getSpinnerContainerElement(element);
     private setElementStyle(element, htmlElement);
 }

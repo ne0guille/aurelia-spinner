@@ -50,7 +50,7 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
         }
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, aurelia_pal_1, spinner_config_1, spinnerHeight, SpinnerService;
+    var aurelia_framework_1, aurelia_pal_1, spinner_config_1, SpinnerService;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -64,7 +64,6 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
             }
         ],
         execute: function () {
-            spinnerHeight = 35;
             SpinnerService = (function () {
                 function SpinnerService(container, viewEngine, spinnerConfig) {
                     this.container = container;
@@ -77,7 +76,7 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                 }
                 SpinnerService.prototype.createSpinner = function (element, self) {
                     return __awaiter(this, void 0, void 0, function () {
-                        var factory, childContainer, view, spinnerContainer, overlayContainer;
+                        var factory, childContainer, view, spinnerContainer;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, this.viewEngine.loadViewFactory(this.spinnerHtml)];
@@ -86,19 +85,18 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                                     childContainer = this.container.createChild();
                                     view = factory.create(childContainer);
                                     view.bind(self);
-                                    spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
-                                    console.log('isComponent ' + self.isComponent);
-                                    overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
-                                    console.log(overlayContainer);
+                                    spinnerContainer = this.getSpinnerContainerElement(element);
+                                    console.log(spinnerContainer);
                                     this.addElement(element, spinnerContainer, view);
                                     if (this.config.useBackgroundOverlay)
-                                        this.toogleBackgroundOverlay(overlayContainer, true);
-                                    return [2 /*return*/, overlayContainer];
+                                        this.toogleBackgroundOverlay(element, true);
+                                    return [2 /*return*/, element];
                             }
                         });
                     });
                 };
                 SpinnerService.prototype.toogleBackgroundOverlay = function (target, showSpinner) {
+                    // tslint:disable-next-line:curly
                     if (target && this.config.blockerClass)
                         showSpinner ? target.classList.add(this.config.blockerClass) :
                             target.classList.remove(this.config.blockerClass);
@@ -106,25 +104,17 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                 SpinnerService.prototype.addElement = function (element, container, view) {
                     var spinnerDivElement = document.createElement('div');
                     view.appendNodesTo(spinnerDivElement);
-                    var divElement = this.setElementStyle(element, spinnerDivElement);
-                    container.appendChild(divElement);
+                    spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
+                    // container.appendChild(spinnerDivElement);
+                    container.insertBefore(spinnerDivElement, container.firstChild);
                 };
-                SpinnerService.prototype.getSpinnerContainerElement = function (element, isContainer) {
+                SpinnerService.prototype.getSpinnerContainerElement = function (element) {
                     var spinnerClass = element.classList.toString().split(' ').join('.');
                     var selector = "#" + element.id + "." + spinnerClass;
                     var container = document.querySelectorAll(selector)[0];
-                    var isCustomElement = isContainer || this.isCustomElement(container.tagName);
-                    var spinnerContainer = isCustomElement && container.firstElementChild ?
-                        container.firstElementChild : container;
-                    // if (!isCustomElement && container.parentElement !== null)
-                    //   spinnerContainer = container.parentElement;
-                    // else if (!isCustomElement && container.firstElementChild !== null)
-                    //   spinnerContainer = container.firstElementChild;
+                    var spinnerContainer = container.parentElement ? container.parentElement : container;
                     spinnerContainer.classList.add('spinner-container');
                     return spinnerContainer;
-                };
-                SpinnerService.prototype.isCustomElement = function (tagName) {
-                    return tagName.includes('-');
                 };
                 SpinnerService.prototype.setElementStyle = function (element, htmlElement) {
                     var elementRect = element.getBoundingClientRect();
@@ -133,12 +123,11 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                     console.log(elementRect);
                     var isOverflow = height > window.innerHeight;
                     top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
-                    if (top > 50)
-                        top -= spinnerHeight;
+                    var value = isOverflow ? 30 : 50;
                     console.log(top);
                     htmlElement.style.position = 'absolute';
                     htmlElement.style.zIndex = '999';
-                    htmlElement.style.top = isOverflow ? top + "px" : "calc(50% - 65px)";
+                    htmlElement.style.top = "calc(" + value + "% - 65px)";
                     htmlElement.style.left = "calc(50% - 35px)";
                     return htmlElement;
                 };

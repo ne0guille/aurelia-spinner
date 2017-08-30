@@ -15,7 +15,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { inject, Container, ViewEngine } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 import { DefaultSpinnerConfig } from "./spinner-config";
-const spinnerHeight = 35;
 let SpinnerService = class SpinnerService {
     constructor(container, viewEngine, spinnerConfig) {
         this.container = container;
@@ -32,43 +31,34 @@ let SpinnerService = class SpinnerService {
             const childContainer = this.container.createChild();
             const view = factory.create(childContainer);
             view.bind(self);
-            const spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
-            console.log('isComponent ' + self.isComponent);
-            const overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
-            console.log(overlayContainer);
+            const spinnerContainer = this.getSpinnerContainerElement(element);
+            console.log(spinnerContainer);
             this.addElement(element, spinnerContainer, view);
             if (this.config.useBackgroundOverlay)
-                this.toogleBackgroundOverlay(overlayContainer, true);
-            return overlayContainer;
+                this.toogleBackgroundOverlay(element, true);
+            return element;
         });
     }
     toogleBackgroundOverlay(target, showSpinner) {
+        // tslint:disable-next-line:curly
         if (target && this.config.blockerClass)
             showSpinner ? target.classList.add(this.config.blockerClass) :
                 target.classList.remove(this.config.blockerClass);
     }
     addElement(element, container, view) {
-        const spinnerDivElement = document.createElement('div');
+        let spinnerDivElement = document.createElement('div');
         view.appendNodesTo(spinnerDivElement);
-        const divElement = this.setElementStyle(element, spinnerDivElement);
-        container.appendChild(divElement);
+        spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
+        // container.appendChild(spinnerDivElement);
+        container.insertBefore(spinnerDivElement, container.firstChild);
     }
-    getSpinnerContainerElement(element, isContainer) {
+    getSpinnerContainerElement(element) {
         const spinnerClass = element.classList.toString().split(' ').join('.');
         const selector = `#${element.id}.${spinnerClass}`;
         const container = document.querySelectorAll(selector)[0];
-        const isCustomElement = isContainer || this.isCustomElement(container.tagName);
-        const spinnerContainer = isCustomElement && container.firstElementChild ?
-            container.firstElementChild : container;
-        // if (!isCustomElement && container.parentElement !== null)
-        //   spinnerContainer = container.parentElement;
-        // else if (!isCustomElement && container.firstElementChild !== null)
-        //   spinnerContainer = container.firstElementChild;
+        const spinnerContainer = container.parentElement ? container.parentElement : container;
         spinnerContainer.classList.add('spinner-container');
         return spinnerContainer;
-    }
-    isCustomElement(tagName) {
-        return tagName.includes('-');
     }
     setElementStyle(element, htmlElement) {
         const elementRect = element.getBoundingClientRect();
@@ -77,12 +67,11 @@ let SpinnerService = class SpinnerService {
         console.log(elementRect);
         const isOverflow = height > window.innerHeight;
         top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
-        if (top > 50)
-            top -= spinnerHeight;
+        const value = isOverflow ? 30 : 50;
         console.log(top);
         htmlElement.style.position = 'absolute';
         htmlElement.style.zIndex = '999';
-        htmlElement.style.top = isOverflow ? `${top}px` : `calc(50% - 65px)`;
+        htmlElement.style.top = `calc(${value}% - 65px)`;
         htmlElement.style.left = `calc(50% - 35px)`;
         return htmlElement;
     }

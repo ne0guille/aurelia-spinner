@@ -15,7 +15,7 @@ The only required attribute its the spinner view.
 
 const spinnerConfig: SpinnerConfig = {
     spinner: spinnerViews.circle,
-    useBackgroundBlocker: false,
+    useBackgroundOverlay: false,
     blockerClass: 'my-default-overlay-background'
 };
  
@@ -23,7 +23,7 @@ aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner', config => spinnerConfi
 
  ```
 
- **Options**
+ **Configuration Options**
 You can see all of the spinners available in the demo site.
 
  ```
@@ -65,8 +65,21 @@ Usage with default configurations
 
   <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
   </div>
+  
+  Currently, you need to wrap your custom element or code.
+
+  <div class="wrapper"> PARENT- spinner-container class will be added here
+    <spinner> -> spinner will be inserted here  
+   **<div id="div1" spinner="show.bind: showVM"> -> ELEMENT - BackgroundOverlay class is added here
+        stuff          
+    </div>**
+  </div>
+
+  <div class="wrapper">
+    <my-element spinner="show.bind: showVM"/>
+  </div>
   ```
-  **Options**
+  **Bindables**
 ```
   Bindable used to show or hide the spinner.
   show: boolean = false; 
@@ -77,19 +90,12 @@ Usage with default configurations
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
 
-  If you apply the spinner attribute is beeing used in a custom element acting as the container, you need to specify it as is-component: true. Otherwise it will apply spinner outside of the element node.
-  isComponent: boolean = false;
-
   example: 
-
-  You need to specify is-component bindable in this case
-  <my-custom-component id="spinnerContainer" spinner="show.bind: show; is-component: true">
-  </my-custom-component>
-
-  You **dont** need to specify is-component bindable in this case
-  <div id="spinnerContainer spinner="show.bind: show">
-    <my-custom-component></my-custom-component>
+  
+  
+  <div id="spinnerContainer" spinner="show.bind: show">
   </div>
+
  ```
  
 

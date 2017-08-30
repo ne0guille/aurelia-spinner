@@ -6,18 +6,19 @@ System.register(["aurelia-pal", "./spinner-config"], function (exports_1, contex
         config.container.registerInstance('spinner-config', spinnerConfig);
     }
     exports_1("configure", configure);
-    var aurelia_pal_1, spinner_config_1;
+    var aurelia_pal_1;
     return {
         setters: [
             function (aurelia_pal_1_1) {
                 aurelia_pal_1 = aurelia_pal_1_1;
             },
             function (spinner_config_1_1) {
-                spinner_config_1 = spinner_config_1_1;
+                exports_1({
+                    "spinnerViews": spinner_config_1_1["spinnerViews"]
+                });
             }
         ],
         execute: function () {
-            exports_1("spinnerViews", spinner_config_1.spinnerViews);
         }
     };
 });

@@ -9,8 +9,7 @@ export class SpinnerCustomAttribute {
   @bindable({ defaultBindingMode: bindingMode.oneWay }) show: boolean = false;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) view?: string = undefined;
   @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = false;
-  @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
-  
+
   constructor(private element: Element,
     private spinnerService: SpinnerService) { }
 
@@ -23,12 +22,12 @@ export class SpinnerCustomAttribute {
 
   attached() {
     this.spinnerService.createSpinner(this.element, this)
-    .then((target: Element) => this.target = target);
+      .then((target: Element) => this.target = target);
   }
 
   showChanged(showSpinner: boolean) {
     if (!this.target || !this.block) return;
-    
+
     this.spinnerService.toogleBackgroundOverlay(this.target, showSpinner);
   }
 }

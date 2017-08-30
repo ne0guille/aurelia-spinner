@@ -1,9 +1,7 @@
-import { inject, Container, View, ViewEngine } from 'aurelia-framework';
+import { inject, Container, View, ViewEngine, ViewFactory } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 
 import { DefaultSpinnerConfig, SpinnerConfig } from "./spinner-config";
-
-const spinnerHeight = 35;
 
 @inject(Container, ViewEngine, 'spinner-config')
 export class SpinnerService {
@@ -17,78 +15,58 @@ export class SpinnerService {
   }
 
   public async createSpinner(element: Element, self: any): Promise<Element> {
-    const factory = await this.viewEngine.loadViewFactory(this.spinnerHtml);
+    const factory: ViewFactory = await this.viewEngine.loadViewFactory(this.spinnerHtml);
     const childContainer: Container = this.container.createChild();
     const view: View = factory.create(childContainer);
 
     view.bind(self);
 
-    const spinnerContainer = this.getSpinnerContainerElement(element, self.isComponent);
-    const overlayContainer = self.isComponent && element.firstElementChild !== null ? element.firstElementChild : element;
-    console.log(overlayContainer);
+    const spinnerContainer: Element = this.getSpinnerContainerElement(element);
     this.addElement(element, spinnerContainer, view);
 
-    if (this.config.useBackgroundOverlay) this.toogleBackgroundOverlay(overlayContainer, true);
+    if (this.config.useBackgroundOverlay) this.toogleBackgroundOverlay(element, true);
 
-    return overlayContainer;
+    return element;
   }
 
-  public toogleBackgroundOverlay(target: Element, showSpinner: boolean) {
+  public toogleBackgroundOverlay(target: Element, showSpinner: boolean): void {
+    // tslint:disable-next-line:curly
     if (target && this.config.blockerClass)
       showSpinner ? target.classList.add(this.config.blockerClass) :
         target.classList.remove(this.config.blockerClass);
   }
 
   private addElement(element: Element, container: Element, view: View): void {
-    const spinnerDivElement: HTMLElement = <HTMLElement>document.createElement('div');
+    let spinnerDivElement: HTMLElement = <HTMLElement>document.createElement('div');
 
     view.appendNodesTo(spinnerDivElement);
 
-    const divElement = this.setElementStyle(element, spinnerDivElement);
+    spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
 
-    container.appendChild(divElement);
+    // container.appendChild(spinnerDivElement);
+    container.insertBefore(spinnerDivElement, container.firstChild);
   }
 
-  private getSpinnerContainerElement(element: Element, isContainer: boolean): Element {
+  private getSpinnerContainerElement(element: Element): Element {
     const spinnerClass: string = element.classList.toString().split(' ').join('.');
     const selector: string = `#${element.id}.${spinnerClass}`;
     const container: Element = document.querySelectorAll(selector)[0];
-
-    const isCustomElement: boolean = isContainer || this.isCustomElement(container.tagName);
-
-    const spinnerContainer = isCustomElement && container.firstElementChild ?
-      container.firstElementChild : container;
-    //todo check use parent?
-    // if (!isCustomElement && container.parentElement !== null)
-    //   spinnerContainer = container.parentElement;
-    // else if (!isCustomElement && container.firstElementChild !== null)
-    //   spinnerContainer = container.firstElementChild;
+    const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
 
     spinnerContainer.classList.add('spinner-container');
 
     return spinnerContainer;
   }
 
-  private isCustomElement(tagName: string) {
-    return tagName.includes('-');
-  }
-
   private setElementStyle(element: Element, htmlElement: HTMLElement): HTMLElement {
     const elementRect: ClientRect = element.getBoundingClientRect();
-    const height = elementRect.height;
-    let top: number = elementRect.top + height;
-    console.log(elementRect);
-    const isOverflow = height > window.innerHeight;
-
-    top = isOverflow ? (elementRect.top - height + window.scrollY) : (height / 2);
-
-    if (top > 50) top -= spinnerHeight;
-
-    console.log(top);
+    const height: number = elementRect.height;
+    const isOverflow: boolean = height > window.innerHeight;
+    const top: number = isOverflow ? 30 : 50;
 
     htmlElement.style.position = 'absolute';
     htmlElement.style.zIndex = '999';
-    htmlElement.style.top = isOverflow ? `${top}px` : `calc(50% - 65px)`;
+    htmlElement.style.top = `calc(${top}% - 65px)`;
     htmlElement.style.left = `calc(50% - 35px)`;
 
     return htmlElement;

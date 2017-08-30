@@ -7,13 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { inject, bindable, bindingMode } from 'aurelia-framework';
 import { SpinnerService } from "./spinner-service";
 let SpinnerCustomAttribute = class SpinnerCustomAttribute {
+    // @bindable({ defaultBindingMode: bindingMode.oneTime }) isComponent: boolean = false;
     constructor(element, spinnerService) {
         this.element = element;
         this.spinnerService = spinnerService;
         this.show = false;
         this.view = undefined;
         this.block = false;
-        this.isComponent = false;
     }
     bind() {
         this.view = this.view || this.spinnerService.config.spinner;
@@ -40,9 +40,6 @@ __decorate([
 __decorate([
     bindable({ defaultBindingMode: bindingMode.oneTime })
 ], SpinnerCustomAttribute.prototype, "block", void 0);
-__decorate([
-    bindable({ defaultBindingMode: bindingMode.oneTime })
-], SpinnerCustomAttribute.prototype, "isComponent", void 0);
 SpinnerCustomAttribute = __decorate([
     inject(Element, SpinnerService)
 ], SpinnerCustomAttribute);
