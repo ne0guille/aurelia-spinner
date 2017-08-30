@@ -2,10 +2,16 @@ import { PLATFORM } from "aurelia-framework";
 
 const blockerClass: string = 'spinner-blocker';
 
-export class SpinnerConfig {
-  spinner: string = undefined;
-  useBackgroundBlocker?: boolean = false;
-  blockerClass?: string = blockerClass;
+export interface SpinnerConfig {
+  spinner?: string;
+  useBackgroundOverlay?: boolean;
+  blockerClass?: string;
+}
+
+export class DefaultSpinnerConfig implements SpinnerConfig {
+  spinner?: string = undefined;
+  useBackgroundOverlay: boolean = false;
+  blockerClass: string = blockerClass;
 }
 
 export const spinnerViews = {

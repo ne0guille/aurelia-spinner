@@ -1,7 +1,7 @@
 import { PLATFORM } from 'aurelia-pal';
 import { FrameworkConfiguration } from 'aurelia-framework';
 
-import { SpinnerConfig, spinnerViews } from "./spinner-config";
+import { SpinnerConfig } from './spinner-config';
 
 
 export function configure(config: FrameworkConfiguration, spinnerConfig: SpinnerConfig): void {
@@ -9,7 +9,5 @@ export function configure(config: FrameworkConfiguration, spinnerConfig: Spinner
   config.container.registerInstance('spinner-config', spinnerConfig);
 }
 
-export {
-  SpinnerConfig,
-  spinnerViews
-};
+export { SpinnerConfig, spinnerViews } from './spinner-config';
+

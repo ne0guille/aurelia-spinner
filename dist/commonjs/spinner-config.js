@@ -1,17 +1,16 @@
 "use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var blockerClass = 'spinner-blocker';
-var SpinnerConfig = function () {
-    function SpinnerConfig() {
+var DefaultSpinnerConfig = (function () {
+    function DefaultSpinnerConfig() {
         this.spinner = undefined;
-        this.useBackgroundBlocker = false;
+        this.useBackgroundOverlay = false;
         this.blockerClass = blockerClass;
     }
-    return SpinnerConfig;
-}();
-exports.SpinnerConfig = SpinnerConfig;
+    return DefaultSpinnerConfig;
+}());
+exports.DefaultSpinnerConfig = DefaultSpinnerConfig;
 exports.spinnerViews = {
     chasingDots: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/chasing-dots.html'),
     circle: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/circle.html'),
@@ -25,4 +24,3 @@ exports.spinnerViews = {
     wanderingCubes: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wandering-cubes.html'),
     wave: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html')
 };
-//# sourceMappingURL=spinner-config.js.map

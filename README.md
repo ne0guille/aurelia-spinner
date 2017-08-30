@@ -16,7 +16,7 @@ import { SpinnerConfig, spinnerViews } from 'aurelia-spinner';
 
 const spinnerConfig: SpinnerConfig = {
     spinner: spinnerViews.circle,
-    useBackgroundBlocker: false,
+    useBackgroundOverlay: false,
     blockerClass: 'my-default-overlay-background'
 };
  
@@ -24,7 +24,7 @@ aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner', spinnerConfig))
 
  ```
 
- **Options**
+ **Configuration Options**
 You can see all of the spinners available in the demo site.
 
  ```
@@ -61,12 +61,28 @@ sass: 'spinkit/scss/spinners/9-cube-grid.scss';
 You need to specify an unique id for the element using the spinner attribute.
 Usage with default configurations
  ```
-   <div id="div1" spinner="show.bind: showVM"></div>
+   
+  <div class="container">
+    <div id="div1" spinner="show.bind: showVM"></div>
+  </div>
+
+  <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
+  </div>
   
-   <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true">
+  Currently, you need to wrap your custom element or code.
+
+  <div class="wrapper"> PARENT- spinner-container class will be added here
+    <spinner> -> spinner will be inserted here  
+   **<div id="div1" spinner="show.bind: showVM"> -> ELEMENT - BackgroundOverlay class is added here
+        stuff          
+    </div>**
+  </div>
+
+  <div class="wrapper">
+    <my-element spinner="show.bind: showVM"/>
   </div>
   ```
-  **Options**
+  **Bindables**
 ```
   Bindable used to show or hide the spinner.
   show: boolean = false; 
@@ -76,6 +92,15 @@ Usage with default configurations
 
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
-```
+
+  example: 
+  
+  
+  <div id="spinnerContainer" spinner="show.bind: show">
+  </div>
+
+ ```
+ 
+
   **Dependencies**
   "spinkit": https://github.com/tobiasahlin/SpinKit
