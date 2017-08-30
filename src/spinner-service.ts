@@ -21,7 +21,8 @@ export class SpinnerService {
 
     view.bind(self);
 
-    const spinnerContainer: Element = this.getSpinnerContainerElement(element);
+    const spinnerContainer: Element = element.firstElementChild || element;
+    // this.getSpinnerContainerElement(element);
     this.addElement(element, spinnerContainer, view);
 
     if (this.config.useBackgroundOverlay) this.toogleBackgroundOverlay(element, true);
@@ -47,26 +48,23 @@ export class SpinnerService {
     container.insertBefore(spinnerDivElement, container.firstChild);
   }
 
-  private getSpinnerContainerElement(element: Element): Element {
-    const spinnerClass: string = element.classList.toString().split(' ').join('.');
-    const selector: string = `#${element.id}.${spinnerClass}`;
-    const container: Element = document.querySelectorAll(selector)[0];
-    const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
+  // private getSpinnerContainerElement(element: Element): Element {
+  //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
+  //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
 
-    spinnerContainer.classList.add('spinner-container');
+  //   spinnerContainer.classList.add('spinner-container');
 
-    return spinnerContainer;
-  }
+  //   return spinnerContainer;
+  // }
 
   private setElementStyle(element: Element, htmlElement: HTMLElement): HTMLElement {
     const elementRect: ClientRect = element.getBoundingClientRect();
     const height: number = elementRect.height;
-    const isOverflow: boolean = height > window.innerHeight;
-    const top: number = isOverflow ? 30 : 50;
+    const top: string = height > window.innerHeight ? `100px` : `calc(30% - 35px)`;
 
     htmlElement.style.position = 'absolute';
     htmlElement.style.zIndex = '999';
-    htmlElement.style.top = `calc(${top}% - 65px)`;
+    htmlElement.style.top = top;
     htmlElement.style.left = `calc(50% - 35px)`;
 
     return htmlElement;

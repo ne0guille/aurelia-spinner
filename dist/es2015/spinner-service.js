@@ -31,7 +31,8 @@ let SpinnerService = class SpinnerService {
             const childContainer = this.container.createChild();
             const view = factory.create(childContainer);
             view.bind(self);
-            const spinnerContainer = this.getSpinnerContainerElement(element);
+            const spinnerContainer = element.firstElementChild || element;
+            // this.getSpinnerContainerElement(element);
             this.addElement(element, spinnerContainer, view);
             if (this.config.useBackgroundOverlay)
                 this.toogleBackgroundOverlay(element, true);
@@ -51,22 +52,19 @@ let SpinnerService = class SpinnerService {
         // container.appendChild(spinnerDivElement);
         container.insertBefore(spinnerDivElement, container.firstChild);
     }
-    getSpinnerContainerElement(element) {
-        const spinnerClass = element.classList.toString().split(' ').join('.');
-        const selector = `#${element.id}.${spinnerClass}`;
-        const container = document.querySelectorAll(selector)[0];
-        const spinnerContainer = container.parentElement ? container.parentElement : container;
-        spinnerContainer.classList.add('spinner-container');
-        return spinnerContainer;
-    }
+    // private getSpinnerContainerElement(element: Element): Element {
+    //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
+    //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
+    //   spinnerContainer.classList.add('spinner-container');
+    //   return spinnerContainer;
+    // }
     setElementStyle(element, htmlElement) {
         const elementRect = element.getBoundingClientRect();
         const height = elementRect.height;
-        const isOverflow = height > window.innerHeight;
-        const top = isOverflow ? 30 : 50;
+        const top = height > window.innerHeight ? `100px` : `calc(30% - 35px)`;
         htmlElement.style.position = 'absolute';
         htmlElement.style.zIndex = '999';
-        htmlElement.style.top = `calc(${top}% - 65px)`;
+        htmlElement.style.top = top;
         htmlElement.style.left = `calc(50% - 35px)`;
         return htmlElement;
     }

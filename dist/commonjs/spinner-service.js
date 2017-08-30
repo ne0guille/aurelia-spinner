@@ -73,7 +73,8 @@ var SpinnerService = (function () {
                         childContainer = this.container.createChild();
                         view = factory.create(childContainer);
                         view.bind(self);
-                        spinnerContainer = this.getSpinnerContainerElement(element);
+                        spinnerContainer = element.firstElementChild || element;
+                        // this.getSpinnerContainerElement(element);
                         this.addElement(element, spinnerContainer, view);
                         if (this.config.useBackgroundOverlay)
                             this.toogleBackgroundOverlay(element, true);
@@ -95,22 +96,19 @@ var SpinnerService = (function () {
         // container.appendChild(spinnerDivElement);
         container.insertBefore(spinnerDivElement, container.firstChild);
     };
-    SpinnerService.prototype.getSpinnerContainerElement = function (element) {
-        var spinnerClass = element.classList.toString().split(' ').join('.');
-        var selector = "#" + element.id + "." + spinnerClass;
-        var container = document.querySelectorAll(selector)[0];
-        var spinnerContainer = container.parentElement ? container.parentElement : container;
-        spinnerContainer.classList.add('spinner-container');
-        return spinnerContainer;
-    };
+    // private getSpinnerContainerElement(element: Element): Element {
+    //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
+    //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
+    //   spinnerContainer.classList.add('spinner-container');
+    //   return spinnerContainer;
+    // }
     SpinnerService.prototype.setElementStyle = function (element, htmlElement) {
         var elementRect = element.getBoundingClientRect();
         var height = elementRect.height;
-        var isOverflow = height > window.innerHeight;
-        var top = isOverflow ? 30 : 50;
+        var top = height > window.innerHeight ? "100px" : "calc(30% - 35px)";
         htmlElement.style.position = 'absolute';
         htmlElement.style.zIndex = '999';
-        htmlElement.style.top = "calc(" + top + "% - 65px)";
+        htmlElement.style.top = top;
         htmlElement.style.left = "calc(50% - 35px)";
         return htmlElement;
     };
