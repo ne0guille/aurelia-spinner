@@ -12,9 +12,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { inject, Container, ViewEngine } from 'aurelia-framework';
+import { Container, inject, ViewEngine } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
-import { DefaultSpinnerConfig } from "./spinner-config";
+import { DefaultSpinnerConfig } from './spinner-config';
+const containerClass = 'spinner-container';
+const spinnerClass = 'aurelia-spinner';
+const spinnerHeight = 35;
 let SpinnerService = class SpinnerService {
     constructor(container, viewEngine, spinnerConfig) {
         this.container = container;
@@ -31,42 +34,41 @@ let SpinnerService = class SpinnerService {
             const childContainer = this.container.createChild();
             const view = factory.create(childContainer);
             view.bind(self);
-            const spinnerContainer = element.firstElementChild || element;
-            // this.getSpinnerContainerElement(element);
-            this.addElement(element, spinnerContainer, view);
-            if (this.config.useBackgroundOverlay)
-                this.toogleBackgroundOverlay(element, true);
-            return element;
+            let blockerContainer = element;
+            let spinnerContainer = element;
+            if (element.parentElement && this.containsClass(element.parentElement, spinnerClass))
+                spinnerContainer = element.parentElement;
+            if (element.firstElementChild && this.containsClass(element.firstElementChild, containerClass))
+                blockerContainer = element.firstElementChild;
+            element.classList.add(containerClass);
+            this.addElement(spinnerContainer, view);
+            if (this.config.useBackgroundOverlay || self.block)
+                this.toogleBackgroundOverlay(blockerContainer, true);
+            return blockerContainer;
         });
     }
     toogleBackgroundOverlay(target, showSpinner) {
-        // tslint:disable-next-line:curly
         if (target && this.config.blockerClass)
-            showSpinner ? target.classList.add(this.config.blockerClass) :
-                target.classList.remove(this.config.blockerClass);
+            showSpinner ? target.classList.add(this.config.blockerClass) : target.classList.remove(this.config.blockerClass);
     }
-    addElement(element, container, view) {
+    addElement(spinnerContainer, view) {
         let spinnerDivElement = document.createElement('div');
         view.appendNodesTo(spinnerDivElement);
-        spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
-        // container.appendChild(spinnerDivElement);
-        container.insertBefore(spinnerDivElement, container.firstChild);
+        spinnerDivElement = this.setElementStyle(spinnerContainer, spinnerDivElement);
+        spinnerContainer.appendChild(spinnerDivElement);
     }
-    // private getSpinnerContainerElement(element: Element): Element {
-    //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
-    //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
-    //   spinnerContainer.classList.add('spinner-container');
-    //   return spinnerContainer;
-    // }
     setElementStyle(element, htmlElement) {
         const elementRect = element.getBoundingClientRect();
-        const height = elementRect.height;
-        const top = height > window.innerHeight ? `100px` : `calc(30% - 35px)`;
+        const height = htmlElement.getBoundingClientRect().height || spinnerHeight;
+        const top = (elementRect.top + height) > window.innerHeight ? `100px` : `calc(10% - ${spinnerHeight}px)`;
         htmlElement.style.position = 'absolute';
         htmlElement.style.zIndex = '999';
         htmlElement.style.top = top;
-        htmlElement.style.left = `calc(50% - 35px)`;
+        htmlElement.style.left = `calc(50% - ${spinnerHeight}px)`;
         return htmlElement;
+    }
+    containsClass(element, className) {
+        return element.classList.contains(className);
     }
 };
 SpinnerService = __decorate([
