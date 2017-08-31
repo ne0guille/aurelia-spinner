@@ -86,6 +86,7 @@
     "require-dir": "0.3.2",
     "rimraf": "2.6.1",
     "run-sequence": "1.2.2",
+    "tslint-eslint-rules": "^4.1.1",
     "typedoc": "0.8.0",
     "typescript": "2.4.2",
     "vinyl-paths": "2.1.0",
