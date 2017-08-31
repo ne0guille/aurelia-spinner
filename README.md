@@ -58,29 +58,41 @@ sass: 'spinkit/scss/spinners/9-cube-grid.scss';
 ```
 
 **Usage**
-You need to specify an unique id for the element using the spinner attribute.
 Usage with default configurations
  ```
    
   <div class="container">
-    <div id="div1" spinner="show.bind: showVM"></div>
+    <div spinner="show.bind: showVM"></div>
   </div>
 
-  <div id="div2" spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
+  <div spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
   </div>
   
   Currently, you need to wrap your custom element or code.
+  You can specify the container element adding the spinner-container class first the children node. Also you can add the 'aurelia-spinner' class on the parent node to render the spinner component on top of your code.
 
-  <div class="wrapper"> PARENT- spinner-container class will be added here
-    <spinner> -> spinner will be inserted here  
-   **<div id="div1" spinner="show.bind: showVM"> -> ELEMENT - BackgroundOverlay class is added here
-        stuff          
-    </div>**
-  </div>
+  The background overlay class will be added on the container / wrapper node.
 
-  <div class="wrapper">
-    <my-element spinner="show.bind: showVM"/>
-  </div>
+  <section spinner="show.bind: showVM">  
+    <!-- spinner will be inserted here -->    
+    <div class="spinner-container">  <!-- wrapper div -->  <!-- background ovelay will be added here -->
+      <!-- my-custom-code -->
+    </div>
+  </section>
+
+  <section class="aurelia-spinner">
+  <!-- spinner will be inserted here -->     
+    <div spinner="show.bind: showVM"> <!-- wrapper div -->  <!-- background ovelay will be added here -->   
+    <!-- my-custom-code -->
+    </div>
+  </section>
+
+  <section>
+    <div spinner="show.bind: showVM" class="playground__spinner"> <!-- spinner-container class will be added here --> 
+      <!-- spinner will be inserted here -->    
+      stuff
+    </div>
+  </section>
   ```
   **Bindables**
 ```
@@ -95,12 +107,9 @@ Usage with default configurations
 
   example: 
   
-  
-  <div id="spinnerContainer" spinner="show.bind: show">
-  </div>
+  <div spinner="show.bind: showVM; block: true; view: viewVM"></div>
 
  ```
- 
 
   **Dependencies**
   "spinkit": https://github.com/tobiasahlin/SpinKit

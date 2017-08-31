@@ -50,7 +50,7 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
         }
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, aurelia_pal_1, spinner_config_1, SpinnerService;
+    var aurelia_framework_1, aurelia_pal_1, spinner_config_1, containerClass, spinnerClass, spinnerHeight, SpinnerService;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -64,6 +64,9 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
             }
         ],
         execute: function () {
+            containerClass = 'spinner-container';
+            spinnerClass = 'aurelia-spinner';
+            spinnerHeight = 35;
             SpinnerService = (function () {
                 function SpinnerService(container, viewEngine, spinnerConfig) {
                     this.container = container;
@@ -76,7 +79,7 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                 }
                 SpinnerService.prototype.createSpinner = function (element, self) {
                     return __awaiter(this, void 0, void 0, function () {
-                        var factory, childContainer, view, spinnerContainer;
+                        var factory, childContainer, view, blockerContainer, spinnerContainer;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4 /*yield*/, this.viewEngine.loadViewFactory(this.spinnerHtml)];
@@ -85,44 +88,43 @@ System.register(["aurelia-framework", "aurelia-pal", "./spinner-config"], functi
                                     childContainer = this.container.createChild();
                                     view = factory.create(childContainer);
                                     view.bind(self);
-                                    spinnerContainer = element.firstElementChild || element;
-                                    // this.getSpinnerContainerElement(element);
-                                    this.addElement(element, spinnerContainer, view);
-                                    if (this.config.useBackgroundOverlay)
-                                        this.toogleBackgroundOverlay(element, true);
-                                    return [2 /*return*/, element];
+                                    blockerContainer = element;
+                                    spinnerContainer = element;
+                                    if (element.parentElement && this.containsClass(element.parentElement, spinnerClass))
+                                        spinnerContainer = element.parentElement;
+                                    if (element.firstElementChild && this.containsClass(element.firstElementChild, containerClass))
+                                        blockerContainer = element.firstElementChild;
+                                    element.classList.add(containerClass);
+                                    this.addElement(spinnerContainer, view);
+                                    if (this.config.useBackgroundOverlay || self.block)
+                                        this.toogleBackgroundOverlay(blockerContainer, true);
+                                    return [2 /*return*/, blockerContainer];
                             }
                         });
                     });
                 };
                 SpinnerService.prototype.toogleBackgroundOverlay = function (target, showSpinner) {
-                    // tslint:disable-next-line:curly
                     if (target && this.config.blockerClass)
-                        showSpinner ? target.classList.add(this.config.blockerClass) :
-                            target.classList.remove(this.config.blockerClass);
+                        showSpinner ? target.classList.add(this.config.blockerClass) : target.classList.remove(this.config.blockerClass);
                 };
-                SpinnerService.prototype.addElement = function (element, container, view) {
+                SpinnerService.prototype.addElement = function (spinnerContainer, view) {
                     var spinnerDivElement = document.createElement('div');
                     view.appendNodesTo(spinnerDivElement);
-                    spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
-                    // container.appendChild(spinnerDivElement);
-                    container.insertBefore(spinnerDivElement, container.firstChild);
+                    spinnerDivElement = this.setElementStyle(spinnerContainer, spinnerDivElement);
+                    spinnerContainer.appendChild(spinnerDivElement);
                 };
-                // private getSpinnerContainerElement(element: Element): Element {
-                //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
-                //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
-                //   spinnerContainer.classList.add('spinner-container');
-                //   return spinnerContainer;
-                // }
                 SpinnerService.prototype.setElementStyle = function (element, htmlElement) {
                     var elementRect = element.getBoundingClientRect();
-                    var height = elementRect.height;
-                    var top = height > window.innerHeight ? "100px" : "calc(30% - 35px)";
+                    var height = htmlElement.getBoundingClientRect().height || spinnerHeight;
+                    var top = (elementRect.top + height) > window.innerHeight ? "100px" : "calc(10% - " + spinnerHeight + "px)";
                     htmlElement.style.position = 'absolute';
                     htmlElement.style.zIndex = '999';
                     htmlElement.style.top = top;
-                    htmlElement.style.left = "calc(50% - 35px)";
+                    htmlElement.style.left = "calc(50% - " + spinnerHeight + "px)";
                     return htmlElement;
+                };
+                SpinnerService.prototype.containsClass = function (element, className) {
+                    return element.classList.contains(className);
                 };
                 SpinnerService = __decorate([
                     aurelia_framework_1.inject(aurelia_framework_1.Container, aurelia_framework_1.ViewEngine, 'spinner-config')

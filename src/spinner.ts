@@ -1,8 +1,8 @@
-import { inject, bindable, bindingMode } from 'aurelia-framework';
+import { bindable, bindingMode, inject, TaskQueue } from 'aurelia-framework';
 
-import { SpinnerService } from "./spinner-service";
+import { SpinnerService } from './spinner-service';
 
-@inject(Element, SpinnerService)
+@inject(Element, TaskQueue, SpinnerService)
 export class SpinnerCustomAttribute {
   private target: Element;
 
@@ -11,23 +11,23 @@ export class SpinnerCustomAttribute {
   @bindable({ defaultBindingMode: bindingMode.oneTime }) block: boolean = false;
 
   constructor(private element: Element,
+    private taskQueue: TaskQueue,
     private spinnerService: SpinnerService) { }
 
   bind() {
     this.view = this.view || this.spinnerService.config.spinner;
     this.block = !!(this.block || this.spinnerService.config.useBackgroundOverlay);
 
-    if (!this.view) throw new Error("no view has been specified for the spinner");
+    if (!this.view) throw new Error('no view has been specified for the spinner');
   }
 
   attached() {
-    this.spinnerService.createSpinner(this.element, this)
-      .then((target: Element) => this.target = target);
+    this.taskQueue.queueTask(async () => this.target = await this.spinnerService.createSpinner(this.element, this));
   }
 
-  showChanged(showSpinner: boolean) {
+  showChanged(newValue: boolean) {
     if (!this.target || !this.block) return;
 
-    this.spinnerService.toogleBackgroundOverlay(this.target, showSpinner);
+    this.spinnerService.toogleBackgroundOverlay(this.target, newValue);
   }
 }

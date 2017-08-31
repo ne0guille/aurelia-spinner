@@ -1,5 +1,5 @@
 import { Container, ViewEngine } from 'aurelia-framework';
-import { SpinnerConfig } from "./spinner-config";
+import { SpinnerConfig } from './spinner-config';
 export declare class SpinnerService {
     private container;
     private viewEngine;
@@ -9,6 +9,7 @@ export declare class SpinnerService {
     constructor(container: Container, viewEngine: ViewEngine, spinnerConfig: SpinnerConfig);
     createSpinner(element: Element, self: any): Promise<Element>;
     toogleBackgroundOverlay(target: Element, showSpinner: boolean): void;
-    private addElement(element, container, view);
+    private addElement(spinnerContainer, view);
     private setElementStyle(element, htmlElement);
+    private containsClass(element, className);
 }

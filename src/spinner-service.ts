@@ -1,7 +1,11 @@
-import { inject, Container, View, ViewEngine, ViewFactory } from 'aurelia-framework';
+import { Container, inject, View, ViewEngine, ViewFactory } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 
-import { DefaultSpinnerConfig, SpinnerConfig } from "./spinner-config";
+import { DefaultSpinnerConfig, SpinnerConfig } from './spinner-config';
+
+const containerClass: string = 'spinner-container';
+const spinnerClass: string = 'aurelia-spinner';
+const spinnerHeight: number = 35;
 
 @inject(Container, ViewEngine, 'spinner-config')
 export class SpinnerService {
@@ -21,52 +25,52 @@ export class SpinnerService {
 
     view.bind(self);
 
-    const spinnerContainer: Element = element.firstElementChild || element;
-    // this.getSpinnerContainerElement(element);
-    this.addElement(element, spinnerContainer, view);
+    let blockerContainer: Element = element;
+    let spinnerContainer: Element = element;
 
-    if (this.config.useBackgroundOverlay) this.toogleBackgroundOverlay(element, true);
+    if (element.parentElement && this.containsClass(element.parentElement, spinnerClass))
+      spinnerContainer = element.parentElement;
 
-    return element;
+    if (element.firstElementChild && this.containsClass(element.firstElementChild, containerClass))
+      blockerContainer = element.firstElementChild;
+
+    element.classList.add(containerClass);
+
+    this.addElement(spinnerContainer, view);
+
+    if (this.config.useBackgroundOverlay || self.block) this.toogleBackgroundOverlay(blockerContainer, true);
+
+    return blockerContainer;
   }
 
   public toogleBackgroundOverlay(target: Element, showSpinner: boolean): void {
-    // tslint:disable-next-line:curly
     if (target && this.config.blockerClass)
-      showSpinner ? target.classList.add(this.config.blockerClass) :
-        target.classList.remove(this.config.blockerClass);
+      showSpinner ? target.classList.add(this.config.blockerClass) : target.classList.remove(this.config.blockerClass);
   }
 
-  private addElement(element: Element, container: Element, view: View): void {
+  private addElement(spinnerContainer: Element, view: View): void {
     let spinnerDivElement: HTMLElement = <HTMLElement>document.createElement('div');
-
     view.appendNodesTo(spinnerDivElement);
 
-    spinnerDivElement = this.setElementStyle(element, spinnerDivElement);
+    spinnerDivElement = this.setElementStyle(spinnerContainer, spinnerDivElement);
 
-    // container.appendChild(spinnerDivElement);
-    container.insertBefore(spinnerDivElement, container.firstChild);
+    spinnerContainer.appendChild(spinnerDivElement);
   }
-
-  // private getSpinnerContainerElement(element: Element): Element {
-  //   const container: Element = document.querySelectorAll(`#${this.element.id}`)[0];
-  //   const spinnerContainer: Element = container.parentElement ? container.parentElement : container;
-
-  //   spinnerContainer.classList.add('spinner-container');
-
-  //   return spinnerContainer;
-  // }
 
   private setElementStyle(element: Element, htmlElement: HTMLElement): HTMLElement {
     const elementRect: ClientRect = element.getBoundingClientRect();
-    const height: number = elementRect.height;
-    const top: string = height > window.innerHeight ? `100px` : `calc(30% - 35px)`;
+    const height: number = htmlElement.getBoundingClientRect().height || spinnerHeight;
+    const top: string = (elementRect.top + height) > window.innerHeight ? `100px` : `calc(10% - ${spinnerHeight}px)`;
 
     htmlElement.style.position = 'absolute';
     htmlElement.style.zIndex = '999';
     htmlElement.style.top = top;
-    htmlElement.style.left = `calc(50% - 35px)`;
+    htmlElement.style.left = `calc(50% - ${spinnerHeight}px)`;
 
     return htmlElement;
+  }
+
+  private containsClass(element: Element, className: string) {
+    return element.classList.contains(className);
   }
 }
