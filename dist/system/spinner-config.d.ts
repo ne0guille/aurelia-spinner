@@ -1,10 +1,12 @@
 export interface SpinnerConfig {
     spinner?: string;
+    color?: string;
     useBackgroundOverlay?: boolean;
     blockerClass?: string;
 }
 export declare class DefaultSpinnerConfig implements SpinnerConfig {
     spinner?: string;
+    color?: string;
     useBackgroundOverlay: boolean;
     blockerClass: string;
 }

@@ -17,7 +17,8 @@ import { SpinnerConfig, spinnerViews } from 'aurelia-spinner';
 const spinnerConfig: SpinnerConfig = {
     spinner: spinnerViews.circle,
     useBackgroundOverlay: false,
-    blockerClass: 'my-default-overlay-background'
+    blockerClass: 'my-default-overlay-background',
+    color: 'black'
 };
  
 aurelia.use.plugin(PLATFORM.moduleName('aurelia-spinner', spinnerConfig))
@@ -65,7 +66,7 @@ Usage with default configurations
     <div spinner="show.bind: showVM"></div>
   </div>
 
-  <div spinner="show.bind: showVM; view.bind: viewVM; block: true; is-container: true">
+  <div spinner="show.bind: showVM; view.bind: viewVM; block: true">
   </div>
   
   Currently, you need to wrap your custom element or code.
@@ -105,9 +106,12 @@ Usage with default configurations
   Used to display an overlay blocker with the spinner. You can change the style setting the class in the default configurarion object or overriding the css of the spinner-block class.
   block: boolean = false; 
 
+  Type a color name or an hexa code.
+  color: string = #333;
+
   example: 
   
-  <div spinner="show.bind: showVM; block: true; view: viewVM"></div>
+  <div spinner="show.bind: showVM; block: true; view: viewVM; color: white"></div>
 
  ```
 

@@ -1,6 +1,5 @@
 <template>
   <div class="sk-double-bounce">
-    <div class="sk-child sk-double-bounce1"></div>
-    <div class="sk-child sk-double-bounce2"></div>
+    <div repeat.for="i of 2" css="background-color: ${color}" class="sk-child sk-double-bounce${i+1}"></div>
   </div>
 </template>

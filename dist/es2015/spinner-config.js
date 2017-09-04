@@ -1,8 +1,9 @@
-import { PLATFORM } from "aurelia-framework";
+import { PLATFORM } from 'aurelia-framework';
 const blockerClass = 'spinner-blocker';
 export class DefaultSpinnerConfig {
     constructor() {
         this.spinner = undefined;
+        this.color = '#333';
         this.useBackgroundOverlay = false;
         this.blockerClass = blockerClass;
     }
@@ -18,5 +19,5 @@ export const spinnerViews = {
     rotatingPlane: PLATFORM.moduleName('aurelia-spinner/dist/views/rotating-plane.html'),
     threeBounce: PLATFORM.moduleName('aurelia-spinner/dist/views/three-bounce.html'),
     wanderingCubes: PLATFORM.moduleName('aurelia-spinner/dist/views/wandering-cubes.html'),
-    wave: PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html')
+    wave: PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html'),
 };
