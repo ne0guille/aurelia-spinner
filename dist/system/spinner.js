@@ -61,10 +61,12 @@ System.register(["aurelia-framework", "./spinner-service"], function (exports_1,
                     this.show = false;
                     this.view = undefined;
                     this.block = false;
+                    this.color = undefined;
                 }
                 SpinnerCustomAttribute.prototype.bind = function () {
                     this.view = this.view || this.spinnerService.config.spinner;
                     this.block = !!(this.block || this.spinnerService.config.useBackgroundOverlay);
+                    this.color = this.color || this.spinnerService.config.color;
                     if (!this.view)
                         throw new Error('no view has been specified for the spinner');
                 };
@@ -93,6 +95,9 @@ System.register(["aurelia-framework", "./spinner-service"], function (exports_1,
                 __decorate([
                     aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
                 ], SpinnerCustomAttribute.prototype, "block", void 0);
+                __decorate([
+                    aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.oneTime })
+                ], SpinnerCustomAttribute.prototype, "color", void 0);
                 SpinnerCustomAttribute = __decorate([
                     aurelia_framework_1.inject(Element, aurelia_framework_1.TaskQueue, spinner_service_1.SpinnerService)
                 ], SpinnerCustomAttribute);

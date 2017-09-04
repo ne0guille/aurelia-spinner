@@ -1,6 +1,5 @@
 <template>
   <div class="sk-chasing-dots">
-    <div class="sk-child sk-dot1"></div>
-    <div class="sk-child sk-dot2"></div>
+    <div repeat.for="i of 2" css="background-color: ${color}" class="sk-child sk-dot${i+1}"></div>
   </div>
 </template>

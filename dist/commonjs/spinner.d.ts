@@ -8,6 +8,7 @@ export declare class SpinnerCustomAttribute {
     show: boolean;
     view?: string;
     block: boolean;
+    color?: string;
     constructor(element: Element, taskQueue: TaskQueue, spinnerService: SpinnerService);
     bind(): void;
     attached(): void;

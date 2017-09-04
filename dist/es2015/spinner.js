@@ -22,10 +22,12 @@ let SpinnerCustomAttribute = class SpinnerCustomAttribute {
         this.show = false;
         this.view = undefined;
         this.block = false;
+        this.color = undefined;
     }
     bind() {
         this.view = this.view || this.spinnerService.config.spinner;
         this.block = !!(this.block || this.spinnerService.config.useBackgroundOverlay);
+        this.color = this.color || this.spinnerService.config.color;
         if (!this.view)
             throw new Error('no view has been specified for the spinner');
     }
@@ -47,6 +49,9 @@ __decorate([
 __decorate([
     bindable({ defaultBindingMode: bindingMode.oneTime })
 ], SpinnerCustomAttribute.prototype, "block", void 0);
+__decorate([
+    bindable({ defaultBindingMode: bindingMode.oneTime })
+], SpinnerCustomAttribute.prototype, "color", void 0);
 SpinnerCustomAttribute = __decorate([
     inject(Element, TaskQueue, SpinnerService)
 ], SpinnerCustomAttribute);

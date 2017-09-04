@@ -1,5 +1,5 @@
-import { PLATFORM } from 'aurelia-pal';
 import { FrameworkConfiguration } from 'aurelia-framework';
+import { PLATFORM } from 'aurelia-pal';
 
 import { SpinnerConfig } from './spinner-config';
 

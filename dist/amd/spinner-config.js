@@ -5,6 +5,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
     var DefaultSpinnerConfig = (function () {
         function DefaultSpinnerConfig() {
             this.spinner = undefined;
+            this.color = '#333';
             this.useBackgroundOverlay = false;
             this.blockerClass = blockerClass;
         }
@@ -22,6 +23,6 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         rotatingPlane: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/rotating-plane.html'),
         threeBounce: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/three-bounce.html'),
         wanderingCubes: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wandering-cubes.html'),
-        wave: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html')
+        wave: aurelia_framework_1.PLATFORM.moduleName('aurelia-spinner/dist/views/wave.html'),
     };
 });
