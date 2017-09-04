@@ -1,3 +1,8 @@
+<a name="1.0.10"></a>
+## 1.0.10 (2017-09-04)
+
+* adding color to spinner ([55f5b1d](https://github.com/ne0guille/aurelia-spinner/commit/55f5b1d))
+
 <a name="1.0.9"></a>
 ## 1.0.9 (2017-08-31)
 
