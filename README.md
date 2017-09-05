@@ -2,7 +2,7 @@ Aurelia custom attribute to add awesome spinners based on http://tobiasahlin.com
 
 
 **demo**
-http://aurelia-spinner-demo.azurewebsites.net/
+http://aurelia-spinner.azurewebsites.net/
 
 **Installation**
 
