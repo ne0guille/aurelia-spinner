@@ -1,6 +1,6 @@
 {
   "name": "aurelia-spinner",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Spinner custom attribute for aurelia applications.",
   "keywords": [
     "aurelia",
@@ -10,7 +10,7 @@
     "spinners",
     "spinkit"
   ],
-  "homepage": "http://aurelia-spinner-demo.azurewebsites.net/",
+  "homepage": "https://ne0guille-aurelia-spinner.azurewebsites.net/",
   "bugs": {
     "url": "https://github.com/ne0guille/aurelia-spinner/issues"
   },
